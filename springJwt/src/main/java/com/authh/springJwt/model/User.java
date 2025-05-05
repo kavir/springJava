@@ -2,13 +2,10 @@ package com.authh.springJwt.model;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import com.authh.springJwt.Wallet.Model.Wallet;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,19 +28,19 @@ public class User implements UserDetails {
     @Column(name = "id", unique = true)
     private Long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstname;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastname;
 
-    @Column(name = "user_name")
+    @Column(name = "user_name", nullable = false)
     private String username;
 
     @Column(name = "phone_number", unique = true, nullable = false)
     private String number;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -74,51 +71,3 @@ public class User implements UserDetails {
     public boolean isAccountNonLocked() { return true; }
 }
 
-
-// @Data
-// @Entity
-// @Table(name = "authenticusers")
-// public class User implements UserDetails{
-
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     @Column (name = "id",unique = true)
-//     private Long id;
-
-//     @Column (name = "first_name")
-//     private String firstname;
-//     @Column (name = "last_name")
-//     private String lastname;
-//     @Column (name = "user_name")
-//     private String username;
-//     @Column (name = "phone_number",unique = true,nullable = false)
-//     private String number;
-//     @Column (name = "password")
-//     private String password;
-//     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-//     private Wallet wallet;
-
-//     @Enumerated(value = EnumType.STRING)
-//     Role role;
-
-//     @Override
-//     public Collection<? extends GrantedAuthority> getAuthorities() {
-//         return List.of(new SimpleGrantedAuthority("ROLE_" +role.name()));
-//         // TODO Auto-generated method stub
-//         // throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
-//     }
-//     @Override
-//     public boolean isAccountNonExpired() {return true;}
-
-//     @Override
-//     public boolean isEnabled() {return true;}
-//     public boolean isAdmin() {
-//         return "ADMIN".equals(this.role);  // Check if role is "ADMIN"
-//     }
-//     @Override
-//     public boolean isCredentialsNonExpired() {return true;}
-//     @Override
-//     public boolean isAccountNonLocked() {return true;}
-
-    
-// }
