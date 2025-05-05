@@ -22,7 +22,7 @@ public class Wallet {
     private Double balance = 0.0;
 
     @OneToOne
-    @JoinColumn(name = "phone_number", referencedColumnName = "phone_number")
+    @JoinColumn(name = "phone_number", referencedColumnName = "number")
     private User user;
 
     // Getters, Setters, Constructors
