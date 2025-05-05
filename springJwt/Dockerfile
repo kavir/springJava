@@ -8,8 +8,10 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
+RUN ls -l /app
 EXPOSE 8080
 CMD ["java", "-jar", "app.jar"]
+
 
 
 # # Use an official Java runtime as a base image
