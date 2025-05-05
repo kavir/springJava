@@ -15,8 +15,8 @@ public class ElectricityBill {
     @GeneratedValue
     private Long id;
     private Long userId; // Or @ManyToOne User
-    @Column (name = "phone_number",unique = true)
-    private String number; // Or @ManyToOne User
+    // @Column (name = "phone_number",unique = true)
+    // private String number; // Or @ManyToOne User
     private LocalDate billDate;
     private Double unitsConsumed;
     private Double amount;

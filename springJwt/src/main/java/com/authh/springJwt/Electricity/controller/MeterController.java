@@ -38,14 +38,14 @@ public class MeterController {
         return ResponseEntity.ok(meterService.getUserBills(userId));
     }
     @PutMapping("/pay/{billId}")
-    public ResponseEntity<?> payBill(@PathVariable Long billId) {
+    public ResponseEntity<?> payBill(@PathVariable Long billId,@PathVariable String number) {
         try {
             ElectricityBill bill = meterService.getBill(billId);
             if (bill == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bill not found");
             }
 
-            String senderNumber = bill.getNumber();
+            String senderNumber = number;
             String receiverNumber = "9800000000";
             double amount = bill.getAmount();
 
