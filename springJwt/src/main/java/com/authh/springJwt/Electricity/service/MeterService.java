@@ -51,6 +51,9 @@ public class MeterService {
     public List<ElectricityBill> getUserBills(Long userId) {
         return billRepo.findByUserId(userId);
     }
+    public ElectricityBill getBill(Long billId) {
+        return billRepo.findByBill(billId);
+    }
 
     public String payBill(Long billId) {
         ElectricityBill bill = billRepo.findById(billId)

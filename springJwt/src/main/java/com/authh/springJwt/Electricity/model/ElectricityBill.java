@@ -13,6 +13,7 @@ public class ElectricityBill {
     @GeneratedValue
     private Long id;
     private Long userId; // Or @ManyToOne User
+    private String number; // Or @ManyToOne User
     private LocalDate billDate;
     private Double unitsConsumed;
     private Double amount;
