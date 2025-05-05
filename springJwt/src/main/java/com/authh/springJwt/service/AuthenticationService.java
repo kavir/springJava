@@ -70,7 +70,8 @@ public class AuthenticationService {
     }
     
     
-    public AuthenticationResponse authenticate(LoginRequestDTO request){
+    public AuthenticationResponse authenticate(User request){
+    // public AuthenticationResponse authenticate(LoginRequestDTO request){
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNumber(),request.getPassword()));
         User user=userRepository.findByNumber(request.getNumber()).orElseThrow();
         String token=jwtService.generateToken(user);
