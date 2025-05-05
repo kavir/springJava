@@ -25,47 +25,100 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "authenticusers")
-public class User implements UserDetails{
-
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "id",unique = true)
+    @Column(name = "id", unique = true)
     private Long id;
 
-    @Column (name = "first_name")
+    @Column(name = "first_name")
     private String firstname;
-    @Column (name = "last_name")
-    private String lastname;
-    @Column (name = "user_name")
-    private String username;
-    @Column (name = "phone_number",unique = true,nullable = false)
-    private String number;
-    @Column (name = "password")
-    private String password;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Wallet wallet;
 
-    @Enumerated(value = EnumType.STRING)
-    Role role;
+    @Column(name = "last_name")
+    private String lastname;
+
+    @Column(name = "user_name")
+    private String username;
+
+    @Column(name = "phone_number", unique = true, nullable = false)
+    private String number;
+
+    @Column(name = "password")
+    private String password;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Wallet wallet;  // mappedBy indicates this side is the inverse side of the relationship.
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" +role.name()));
-        // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
-    @Override
-    public boolean isAccountNonExpired() {return true;}
 
     @Override
-    public boolean isEnabled() {return true;}
+    public boolean isAccountNonExpired() { return true; }
+
+    @Override
+    public boolean isEnabled() { return true; }
+
     public boolean isAdmin() {
-        return "ADMIN".equals(this.role);  // Check if role is "ADMIN"
+        return "ADMIN".equals(this.role.name());
     }
+
     @Override
-    public boolean isCredentialsNonExpired() {return true;}
+    public boolean isCredentialsNonExpired() { return true; }
+
     @Override
-    public boolean isAccountNonLocked() {return true;}
+    public boolean isAccountNonLocked() { return true; }
+}
+
+
+// @Data
+// @Entity
+// @Table(name = "authenticusers")
+// public class User implements UserDetails{
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     @Column (name = "id",unique = true)
+//     private Long id;
+
+//     @Column (name = "first_name")
+//     private String firstname;
+//     @Column (name = "last_name")
+//     private String lastname;
+//     @Column (name = "user_name")
+//     private String username;
+//     @Column (name = "phone_number",unique = true,nullable = false)
+//     private String number;
+//     @Column (name = "password")
+//     private String password;
+//     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+//     private Wallet wallet;
+
+//     @Enumerated(value = EnumType.STRING)
+//     Role role;
+
+//     @Override
+//     public Collection<? extends GrantedAuthority> getAuthorities() {
+//         return List.of(new SimpleGrantedAuthority("ROLE_" +role.name()));
+//         // TODO Auto-generated method stub
+//         // throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
+//     }
+//     @Override
+//     public boolean isAccountNonExpired() {return true;}
+
+//     @Override
+//     public boolean isEnabled() {return true;}
+//     public boolean isAdmin() {
+//         return "ADMIN".equals(this.role);  // Check if role is "ADMIN"
+//     }
+//     @Override
+//     public boolean isCredentialsNonExpired() {return true;}
+//     @Override
+//     public boolean isAccountNonLocked() {return true;}
 
     
-}
+// }

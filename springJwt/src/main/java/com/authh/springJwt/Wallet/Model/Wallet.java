@@ -23,7 +23,5 @@ public class Wallet {
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-
-    // Getters, Setters, Constructors
+    private User user;  // Ensures user_id references the id from the User entity.
 }
