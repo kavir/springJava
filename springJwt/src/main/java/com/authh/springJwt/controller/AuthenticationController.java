@@ -23,7 +23,8 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequestDTO request) {
+    public ResponseEntity<AuthenticationResponse> register( @RequestBody User request) {
+    // public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequestDTO request) {
         
         return ResponseEntity.ok(authenticationService.registerUser(request));
     }

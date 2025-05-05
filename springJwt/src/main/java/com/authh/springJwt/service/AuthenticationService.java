@@ -5,7 +5,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.authh.springJwt.AuthDTO.LoginRequestDTO;
 import com.authh.springJwt.AuthDTO.RegisterRequestDTO;
 import com.authh.springJwt.Wallet.Model.Wallet;
@@ -33,7 +32,7 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
     }
-    public AuthenticationResponse registerUser(RegisterRequestDTO  request) {
+    public AuthenticationResponse registerUser(User  request) {
         // Create a new wallet object
         Wallet wallet = new Wallet();
         
