@@ -1,16 +1,24 @@
-# -------- Stage 1: Build the application --------
+# -------- Stage 1: Build the Spring Boot App --------
     FROM maven:3.8.5-openjdk-17 AS builder
+
     WORKDIR /app
     COPY . .
+    
     RUN mvn clean package -DskipTests
     
-    # -------- Stage 2: Run the application --------
+    # -------- Stage 2: Run the App --------
     FROM openjdk:17-jdk-slim
+    
     WORKDIR /app
     COPY --from=builder /app/target/*.jar app.jar
-    RUN ls -l /app   # Debug: list files to confirm app.jar exists
+    
+    # Optional: confirm JAR is copied correctly
+    RUN ls -l /app
+    
     EXPOSE 8080
+    
     CMD ["java", "-jar", "app.jar"]
+    
     
 
 # # Use an official Java runtime as a base image
