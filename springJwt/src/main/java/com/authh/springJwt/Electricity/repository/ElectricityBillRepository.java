@@ -9,6 +9,6 @@ import com.authh.springJwt.Electricity.model.ElectricityBill;
 @Repository
 public interface ElectricityBillRepository extends JpaRepository<ElectricityBill, Long> {
     List<ElectricityBill> findByUserId(Long userId);
-    ElectricityBill findByBill(Long billId);
+    ElectricityBill findByBill(Long id);
 }
 
