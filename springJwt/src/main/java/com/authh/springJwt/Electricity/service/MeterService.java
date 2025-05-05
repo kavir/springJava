@@ -52,7 +52,8 @@ public class MeterService {
         return billRepo.findByUserId(userId);
     }
     public ElectricityBill getBill(Long billId) {
-        return billRepo.findByBill(billId);
+        return billRepo.findById(billId)
+                .orElseThrow(() -> new RuntimeException("Bill not found"));
     }
 
     public String payBill(Long billId) {
