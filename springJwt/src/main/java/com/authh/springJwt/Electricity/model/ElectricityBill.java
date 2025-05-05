@@ -1,6 +1,8 @@
 package com.authh.springJwt.Electricity.model;
 
 import java.time.LocalDate;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -13,6 +15,7 @@ public class ElectricityBill {
     @GeneratedValue
     private Long id;
     private Long userId; // Or @ManyToOne User
+    @Column (name = "phone_number",unique = true)
     private String number; // Or @ManyToOne User
     private LocalDate billDate;
     private Double unitsConsumed;
