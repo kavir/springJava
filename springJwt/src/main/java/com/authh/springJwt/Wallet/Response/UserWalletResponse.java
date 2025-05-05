@@ -1,13 +1,13 @@
 package com.authh.springJwt.Wallet.Response;
 
 public class UserWalletResponse {
-    private int id;
+    private Long id;
     private String userName;
     private String userPhoneNumber;
     private Double walletBalance;
 
     // Constructor, getters, and setters
-    public UserWalletResponse(int id,String userName, String userPhoneNumber, Double walletBalance) {
+    public UserWalletResponse(Long id,String userName, String userPhoneNumber, Double walletBalance) {
         this.id=id;
         this.userName = userName;
         this.userPhoneNumber = userPhoneNumber;
@@ -19,7 +19,7 @@ public class UserWalletResponse {
     public String getUserName() {
         return userName;
     }
-    public int getUserId() {
+    public Long getUserId() {
         return id;
     }
 

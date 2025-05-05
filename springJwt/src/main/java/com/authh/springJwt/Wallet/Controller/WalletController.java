@@ -73,7 +73,7 @@ public ResponseEntity<TransferResponse> transferFunds(@RequestParam String sende
         }
     
         User user = wallet.getUser();
-        int id=user.getId();
+        Long id=user.getId();
         String userName = user.getFirstname() + " " + user.getLastname();
         String userPhoneNumber = user.getNumber();
         Double walletBalance = wallet.getBalance();

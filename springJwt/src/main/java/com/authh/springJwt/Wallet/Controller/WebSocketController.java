@@ -25,7 +25,7 @@ public class WebSocketController {
        
     
         User user = wallet.getUser();
-        int id=user.getId();
+        Long id=user.getId();
       
         Double walletBalance = wallet.getBalance();
         // Send the updated balance to the frontend
