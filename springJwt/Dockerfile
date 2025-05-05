@@ -10,7 +10,7 @@
     FROM openjdk:17-jdk-slim
     
     WORKDIR /app
-    COPY --from=builder /app/target/*.jar app.jar
+    COPY --from=builder /app/target/springJwt-0.0.1-SNAPSHOT.jar app.jar
     
     # Optional: confirm JAR is copied correctly
     RUN ls -l /app
