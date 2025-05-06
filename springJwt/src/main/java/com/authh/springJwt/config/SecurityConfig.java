@@ -39,9 +39,8 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         System.out.println("siuuu___SecurityFilterChain initialized!");
-        // return http.csrf(AbstractHttpConfigurer::disable)
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req ->
+                .authorizeRequests(req ->
                         req.requestMatchers("/login/**", "/register/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
                                 .requestMatchers("/api/employees/**").hasAnyRole("USER", "ADMIN")
@@ -68,6 +67,15 @@ public class SecurityConfig implements WebMvcConfigurer {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOriginPatterns("*")  // instead of allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*")
+                .allowCredentials(true);
+    }
     // @Bean
     // @Order(Ordered.HIGHEST_PRECEDENCE)
     // public CorsFilter corsFilter() {
@@ -81,15 +89,6 @@ public class SecurityConfig implements WebMvcConfigurer {
     //     source.registerCorsConfiguration("/**", config);
     //     return new CorsFilter(source);
     // }
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOriginPatterns("*")  // instead of allowedOrigins("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowedHeaders("*")
-                .allowCredentials(true);
-    }
-    
     
 }
 
