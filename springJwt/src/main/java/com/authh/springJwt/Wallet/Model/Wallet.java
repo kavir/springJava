@@ -23,5 +23,5 @@ public class Wallet {//wallet
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;  
+    private User user;  //
 }
