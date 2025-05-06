@@ -19,6 +19,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.authh.springJwt.filter.JwtAuthenticateFilter;
 import com.authh.springJwt.service.UserDetailServiceImp;
 import static org.springframework.security.config.Customizer.withDefaults;
+
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 // import org.springframework.web.cors.CorsConfiguration;
 // import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 // import org.springframework.web.filter.CorsFilter;
@@ -39,7 +43,8 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         System.out.println("siuuu___SecurityFilterChain initialized!");
-        return http.cors(withDefaults()).csrf(AbstractHttpConfigurer::disable)
+        return http.cors(withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(req ->
                         req.requestMatchers("/login/**", "/register/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
@@ -66,7 +71,18 @@ public class SecurityConfig implements WebMvcConfigurer {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowCredentials(true);
+        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
 
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -76,7 +92,13 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
-    // @Bean
+    
+    
+}
+
+
+
+// @Bean
     // @Order(Ordered.HIGHEST_PRECEDENCE)
     // public CorsFilter corsFilter() {
     //     CorsConfiguration config = new CorsConfiguration();
@@ -89,8 +111,3 @@ public class SecurityConfig implements WebMvcConfigurer {
     //     source.registerCorsConfiguration("/**", config);
     //     return new CorsFilter(source);
     // }
-    
-}
-
-
-
