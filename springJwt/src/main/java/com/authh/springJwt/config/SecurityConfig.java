@@ -18,10 +18,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.authh.springJwt.filter.JwtAuthenticateFilter;
 import com.authh.springJwt.service.UserDetailServiceImp;
-
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+import static org.springframework.security.config.Customizer.withDefaults;
+// import org.springframework.web.cors.CorsConfiguration;
+// import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+// import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -39,7 +39,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         System.out.println("siuuu___SecurityFilterChain initialized!");
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http.cors(withDefaults()).csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(req ->
                         req.requestMatchers("/login/**", "/register/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
@@ -72,7 +72,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOriginPatterns("*")  // instead of allowedOrigins("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedMethods("GET", "POST", "PUT", "DELETE","OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
