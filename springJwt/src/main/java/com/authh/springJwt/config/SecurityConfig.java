@@ -32,17 +32,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         System.out.println("siuuu___SecurityFilterChain initialized!");
-        return http
-                .cors(cors -> cors.configurationSource(request -> {
-                    var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
-                    corsConfiguration.addAllowedOrigin("*");
-                    corsConfiguration.addAllowedMethod("*");
-                    corsConfiguration.addAllowedHeader("*");
-                    corsConfiguration.setAllowCredentials(true);
-                    return corsConfiguration;
-                }))
-                .csrf(AbstractHttpConfigurer::disable)
-                .headers(headers -> headers.frameOptions().disable()).csrf(AbstractHttpConfigurer::disable)
+        return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(req ->
                         req.requestMatchers("/login/**", "/register/**").permitAll()
                                 .requestMatchers("/api/employees/**").hasAnyRole("USER", "ADMIN")
