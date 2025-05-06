@@ -18,10 +18,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.authh.springJwt.filter.JwtAuthenticateFilter;
 import com.authh.springJwt.service.UserDetailServiceImp;
-import static org.springframework.security.config.Customizer.withDefaults;
-// import org.springframework.web.cors.CorsConfiguration;
-// import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-// import org.springframework.web.filter.CorsFilter;
+
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -39,8 +39,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         System.out.println("siuuu___SecurityFilterChain initialized!");
-        return http.cors(withDefaults())
-                .csrf(AbstractHttpConfigurer::disable)
+        return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(req ->
                         req.requestMatchers("/login/**", "/register/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
@@ -73,26 +72,25 @@ public class SecurityConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOriginPatterns("*")  // instead of allowedOrigins("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE","OPTIONS")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
-    
+    // @Bean
+    // @Order(Ordered.HIGHEST_PRECEDENCE)
+    // public CorsFilter corsFilter() {
+    //     CorsConfiguration config = new CorsConfiguration();
+    //     config.setAllowCredentials(true);
+    //     config.addAllowedOriginPattern("*"); // Allows all origins with credentials
+    //     config.addAllowedHeader("*");
+    //     config.addAllowedMethod("*");
+
+    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    //     source.registerCorsConfiguration("/**", config);
+    //     return new CorsFilter(source);
+    // }
     
 }
 
 
 
-// @Bean
-    // public CorsConfigurationSource corsConfigurationSource() {
-    //     CorsConfiguration configuration = new CorsConfiguration();
-    //     configuration.setAllowedOriginPatterns(List.of("http://localhost:3000")); // CHANGE THIS TO YOUR FRONTEND ORIGIN
-    //     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    //     configuration.setAllowedHeaders(List.of("*"));
-    //     configuration.setAllowCredentials(true);
-    
-    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    //     source.registerCorsConfiguration("/**", configuration);
-    //     return source;
-    // }
-    
