@@ -39,8 +39,9 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         System.out.println("siuuu___SecurityFilterChain initialized!");
+        // return http.csrf(AbstractHttpConfigurer::disable)
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeRequests(req ->
+                .authorizeHttpRequests(req ->
                         req.requestMatchers("/login/**", "/register/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
                                 .requestMatchers("/api/employees/**").hasAnyRole("USER", "ADMIN")
@@ -67,7 +68,19 @@ public class SecurityConfig implements WebMvcConfigurer {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    // @Bean
+    // @Order(Ordered.HIGHEST_PRECEDENCE)
+    // public CorsFilter corsFilter() {
+    //     CorsConfiguration config = new CorsConfiguration();
+    //     config.setAllowCredentials(true);
+    //     config.addAllowedOriginPattern("*"); // Allows all origins with credentials
+    //     config.addAllowedHeader("*");
+    //     config.addAllowedMethod("*");
 
+    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    //     source.registerCorsConfiguration("/**", config);
+    //     return new CorsFilter(source);
+    // }
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -76,19 +89,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
-    @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    public CorsFilter corsFilter() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOriginPattern("*"); // Allows all origins with credentials
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
+    
     
 }
 
