@@ -14,6 +14,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "wallets")
+
 public class Wallet {//wallet
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
