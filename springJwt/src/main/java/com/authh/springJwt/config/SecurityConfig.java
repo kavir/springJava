@@ -59,16 +59,26 @@ public class SecurityConfig implements WebMvcConfigurer {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    // Enable CORS globally
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                // .allowedOrigins("*") // Your frontend's domain
-                .allowedOrigins("http://localhost:3000") // Your frontend's domain
+                .allowedOriginPatterns("*")  // instead of allowedOrigins("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true);
     }
+
+    // // Enable CORS globally
+    // @Override
+    // public void addCorsMappings(CorsRegistry registry) {
+    //     registry.addMapping("/**")
+    //             // .allowedOrigins("*") // Your frontend's domain
+    //             .allowedOrigins("http://localhost:3000") // Your frontend's domain
+    //             .allowedMethods("GET", "POST", "PUT", "DELETE")
+    //             .allowedHeaders("*")
+    //             .allowCredentials(true);
+    // }
 }
 
 
