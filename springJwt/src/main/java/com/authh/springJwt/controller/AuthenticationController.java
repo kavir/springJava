@@ -23,11 +23,23 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register( @RequestBody User request) {
-    // public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequestDTO request) {
-        
-        return ResponseEntity.ok(authenticationService.registerUser(request));
+    public ResponseEntity<?> register(@RequestBody User request) {
+        System.out.println("Registering user: " + request);
+        try {
+            AuthenticationResponse response = authenticationService.registerUser(request);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace(); // Log to Railway deploy logs
+            return ResponseEntity.status(500).body("Registration failed: " + e.getMessage());
+        }
     }
+
+    // @PostMapping("/register")
+    // public ResponseEntity<AuthenticationResponse> register( @RequestBody User request) {
+    // // public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequestDTO request) {
+    //     System.out.println("Registering user: " + request);
+    //     return ResponseEntity.ok(authenticationService.registerUser(request));
+    // }
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login( @RequestBody User request) {
     // public ResponseEntity<AuthenticationResponse> login(@Valid @RequestBody LoginRequestDTO request) {
