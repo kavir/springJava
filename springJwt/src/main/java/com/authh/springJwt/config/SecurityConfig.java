@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,6 +42,7 @@ public class SecurityConfig implements WebMvcConfigurer {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(req ->
                         req.requestMatchers("/login/**", "/register/**").permitAll()
+                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
                                 .requestMatchers("/api/employees/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/api/wallet/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/api/transactions/**").hasAnyRole("USER", "ADMIN")
