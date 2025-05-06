@@ -20,7 +20,7 @@ import com.authh.springJwt.Electricity.service.MeterService;
 import com.authh.springJwt.Wallet.Service.WalletService;
 
 @RestController
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 @RequestMapping("/api/meter")
 public class MeterController {
 
