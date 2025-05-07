@@ -66,12 +66,9 @@
 //                 .allowedOriginPatterns("*")  // instead of allowedOrigins("*")
 //                 .allowedMethods("GET", "POST", "PUT", "DELETE")
 //                 .allowedHeaders("*")
-//                 .allowCredentials(true);
+//                 .allowCredentials(false);
 //     }
 
     
 // }
 
-
-
-// // 

@@ -1,5 +1,7 @@
 package com.authh.springJwt.config;
 
+import com.authh.springJwt.filter.JwtAuthenticateFilter;
+import com.authh.springJwt.service.UserDetailServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,14 +15,16 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import com.authh.springJwt.filter.JwtAuthenticateFilter;
-import com.authh.springJwt.service.UserDetailServiceImp;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig implements WebMvcConfigurer {
+public class SecurityConfig {
 
     @Autowired
     private UserDetailServiceImp userDetailServiceImp;
@@ -28,11 +32,12 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Autowired
     private JwtAuthenticateFilter jwtAuthenticationFilter;
 
-    @SuppressWarnings({"deprecation", "removal"})
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         System.out.println("siuuu___SecurityFilterChain initialized!");
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ✅ Enable CORS for secured routes
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(req ->
                         req.requestMatchers("/login/**", "/register/**").permitAll()
                                 .requestMatchers("/api/employees/**").hasAnyRole("USER", "ADMIN")
@@ -40,13 +45,26 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 .requestMatchers("/api/transactions/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/api/qr/generate**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/ws/transactions**").hasAnyRole("USER", "ADMIN")
-                                .anyRequest()
-                                .authenticated())
+                                .anyRequest().authenticated())
                 .userDetailsService(userDetailServiceImp)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+    }
+
+    // ✅ Global CORS Configuration Source Bean
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOriginPatterns(List.of("*")); // for dynamic frontend domains
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true); // if using cookies or Authorization headers
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
     @Bean
@@ -58,17 +76,4 @@ public class SecurityConfig implements WebMvcConfigurer {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOriginPatterns("*")  // instead of allowedOrigins("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowedHeaders("*")
-                .allowCredentials(false);
-    }
-
-    
 }
-
