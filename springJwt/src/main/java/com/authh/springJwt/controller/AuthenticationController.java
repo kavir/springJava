@@ -10,6 +10,8 @@ import com.authh.springJwt.model.UserRegisterDTO;
 import com.authh.springJwt.service.AuthenticationResponse;
 import com.authh.springJwt.service.AuthenticationService;
 
+import jakarta.validation.Valid;
+
 // import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +26,7 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserRegisterDTO  request) {
+    public ResponseEntity<?> register(@RequestBody @Valid UserRegisterDTO  request) {
         System.out.println("Registering user: " + request);
         try {
             AuthenticationResponse response = authenticationService.registerUser(request);
