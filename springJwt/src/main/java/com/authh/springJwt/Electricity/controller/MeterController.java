@@ -48,7 +48,7 @@ public class MeterController {
             }
 
             String senderNumber = number;
-            String receiverNumber = "9800000000";
+            String receiverNumber = "9876543211";
             double amount = bill.getAmount();
 
             String transferStatus = walletService.transferFunds(senderNumber, receiverNumber, amount);
