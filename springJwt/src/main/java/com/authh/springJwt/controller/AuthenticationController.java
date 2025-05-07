@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 // import com.authh.springJwt.AuthDTO.LoginRequestDTO;
 // import com.authh.springJwt.AuthDTO.RegisterRequestDTO;
 import com.authh.springJwt.model.User;
+import com.authh.springJwt.model.UserRegisterDTO;
 import com.authh.springJwt.service.AuthenticationResponse;
 import com.authh.springJwt.service.AuthenticationService;
 
@@ -23,7 +24,7 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User request) {
+    public ResponseEntity<?> register(@RequestBody UserRegisterDTO  request) {
         System.out.println("Registering user: " + request);
         try {
             AuthenticationResponse response = authenticationService.registerUser(request);

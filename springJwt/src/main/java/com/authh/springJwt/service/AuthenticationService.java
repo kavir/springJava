@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.authh.springJwt.Wallet.Model.Wallet;
 import com.authh.springJwt.Wallet.Repository.WalletRepository;
 import com.authh.springJwt.model.User;
+import com.authh.springJwt.model.UserRegisterDTO;
 import com.authh.springJwt.repo.UserRepository;
 
 @Service
@@ -32,7 +33,7 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
     }
-    public AuthenticationResponse registerUser(User  request) {
+    public AuthenticationResponse registerUser(UserRegisterDTO  request) {
         Wallet wallet = new Wallet();
         if (request.getMpin() == null) {
             throw new IllegalArgumentException("MPin must not be null during registration.");
