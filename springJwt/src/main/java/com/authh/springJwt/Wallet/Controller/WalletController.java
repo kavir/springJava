@@ -25,7 +25,7 @@ public class WalletController {
 public ResponseEntity<TransferResponse> transferFunds(@RequestParam String senderNumber,
                                                       @RequestParam String receiverNumber,
                                                       @RequestParam Double amount,
-                                                      @RequestParam String mPin
+                                                      @RequestParam String mpin
                                                       
                                                       ) throws IOException {
     System.out.println("THE DATA ARE: " + senderNumber + " " + receiverNumber + " " + amount);
@@ -41,7 +41,7 @@ public ResponseEntity<TransferResponse> transferFunds(@RequestParam String sende
         ));
     }
 
-    String transferStatus = walletService.transferFunds(senderNumber, receiverNumber, amount,mPin);
+    String transferStatus = walletService.transferFunds(senderNumber, receiverNumber, amount,mpin);
     System.out.println("THE STATUS IS: " + transferStatus);
     
     String receiverName = walletService.getReceiverName(receiverNumber);

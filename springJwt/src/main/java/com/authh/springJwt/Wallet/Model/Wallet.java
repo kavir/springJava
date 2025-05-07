@@ -21,7 +21,7 @@ public class Wallet {//wallet
     private Long id;
 
     private Double balance = 0.0;
-    private String mPin;
+    private String mpin;
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;  //

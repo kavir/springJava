@@ -43,8 +43,8 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
     
-    @Column(name = "mPin", nullable = false)
-    private Long mPin;
+    @Column(name = "mpin", nullable = false)
+    private String mpin;
 
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)

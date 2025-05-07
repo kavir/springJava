@@ -34,7 +34,10 @@ public class AuthenticationService {
     }
     public AuthenticationResponse registerUser(User  request) {
         Wallet wallet = new Wallet();
-        wallet.setMPin(passwordEncoder.encode(request.getMPin().toString()));
+        if (request.getMpin() == null) {
+            throw new IllegalArgumentException("MPin must not be null during registration.");
+        }
+        wallet.setMpin(passwordEncoder.encode(request.getMpin().toString()));
 
         if ("ADMIN".equalsIgnoreCase(request.getRole().name())) {  
             wallet.setBalance(10000000.0);  

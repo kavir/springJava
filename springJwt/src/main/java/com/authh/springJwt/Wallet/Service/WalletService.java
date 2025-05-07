@@ -31,7 +31,7 @@ public class WalletService {
 
 
     @Transactional
-    public String transferFunds(String senderNumber, String receiverNumber, Double amount,String mPin) throws IOException {
+    public String transferFunds(String senderNumber, String receiverNumber, Double amount,String mpin) throws IOException {
         User sender = userRepository.findByNumber(senderNumber)
                 .orElseThrow(() -> new RuntimeException("Sender not found"));
         User receiver = userRepository.findByNumber(receiverNumber)
@@ -39,7 +39,7 @@ public class WalletService {
 
         Wallet senderWallet = sender.getWallet();
         Wallet receiverWallet = receiver.getWallet();
-        if (!passwordEncoder.matches(mPin, senderWallet.getMPin())) {
+        if (!passwordEncoder.matches(mpin, senderWallet.getMpin())) {
             return "INVALID_MPIN";
         }
     
