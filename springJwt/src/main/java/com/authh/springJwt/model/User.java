@@ -6,6 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.authh.springJwt.Wallet.Model.Wallet;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,6 +46,7 @@ public class User implements UserDetails {
     private String password;
     
     @Column(name = "mpin", nullable = false)
+    @JsonProperty("mpin")
     private String mpin;
 
 
