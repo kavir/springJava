@@ -40,7 +40,7 @@ public class MeterController {
         return ResponseEntity.ok(meterService.getUserBills(userId));
     }
     @PostMapping("/pay/{billId}")
-    public ResponseEntity<?> payBill(@PathVariable Long billId,@RequestParam String number) {
+    public ResponseEntity<?> payBill(@PathVariable Long billId,@RequestParam String number,@RequestParam String mPin) {
         try {
             ElectricityBill bill = meterService.getBill(billId);
             if (bill == null) {
@@ -51,7 +51,7 @@ public class MeterController {
             String receiverNumber = "9876543211";
             double amount = bill.getAmount();
 
-            String transferStatus = walletService.transferFunds(senderNumber, receiverNumber, amount);
+            String transferStatus = walletService.transferFunds(senderNumber, receiverNumber, amount,mPin);
             if (!transferStatus.equalsIgnoreCase("SUCCESS")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Payment failed: " + transferStatus);
             }

@@ -24,7 +24,10 @@ public class WalletController {
     @PostMapping("/transfer")
 public ResponseEntity<TransferResponse> transferFunds(@RequestParam String senderNumber,
                                                       @RequestParam String receiverNumber,
-                                                      @RequestParam Double amount) throws IOException {
+                                                      @RequestParam Double amount,
+                                                      @RequestParam String mPin
+                                                      
+                                                      ) throws IOException {
     System.out.println("THE DATA ARE: " + senderNumber + " " + receiverNumber + " " + amount);
 
     // Check if the sender and receiver are the same
@@ -38,11 +41,10 @@ public ResponseEntity<TransferResponse> transferFunds(@RequestParam String sende
         ));
     }
 
-    String transferStatus = walletService.transferFunds(senderNumber, receiverNumber, amount);
+    String transferStatus = walletService.transferFunds(senderNumber, receiverNumber, amount,mPin);
     System.out.println("THE STATUS IS: " + transferStatus);
     
     String receiverName = walletService.getReceiverName(receiverNumber);
-    
     if ("SUCCESS".equals(transferStatus)) {
         TransferResponse response = new TransferResponse(
             "success", 
@@ -52,16 +54,32 @@ public ResponseEntity<TransferResponse> transferFunds(@RequestParam String sende
             receiverNumber
         );
         return ResponseEntity.ok(response);
-    } else {
-        TransferResponse response = new TransferResponse(
-            "failure", 
-            "Transfer failed", 
-            amount, 
-            receiverName, 
+    } else if ("INVALID_MPIN".equals(transferStatus)) {
+        return ResponseEntity.status(401).body(new TransferResponse(
+            "failure",
+            "Invalid mPIN",
+            amount,
+            receiverName,
             receiverNumber
-        );
-        return ResponseEntity.ok(response);
+        ));
+    } else if ("INSUFFICIENT_BALANCE".equals(transferStatus)) {
+        return ResponseEntity.badRequest().body(new TransferResponse(
+            "failure",
+            "Insufficient balance",
+            amount,
+            receiverName,
+            receiverNumber
+        ));
+    } else {
+        return ResponseEntity.status(500).body(new TransferResponse(
+            "failure",
+            "Transfer failed",
+            amount,
+            receiverName,
+            receiverNumber
+        ));
     }
+    
 }
 
     @GetMapping("/userWallet")

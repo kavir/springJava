@@ -42,6 +42,10 @@ public class User implements UserDetails {
 
     @Column(name = "password", nullable = false)
     private String password;
+    
+    @Column(name = "mPin", nullable = false)
+    private Long mPin;
+
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Wallet wallet;  // mappedBy indicates this side is the inverse side of the relationship.

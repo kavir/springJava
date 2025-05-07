@@ -33,45 +33,37 @@ public class AuthenticationService {
         this.jwtService = jwtService;
     }
     public AuthenticationResponse registerUser(User  request) {
-        // Create a new wallet object
         Wallet wallet = new Wallet();
-        
-        // Set the balance based on the role
-        if ("ADMIN".equalsIgnoreCase(request.getRole().name())) {  // Using name() if role is an enum
-            wallet.setBalance(10000000.0);  // Set balance to 10,000,000 for admin
+        wallet.setMPin(passwordEncoder.encode(request.getMPin().toString()));
+
+        if ("ADMIN".equalsIgnoreCase(request.getRole().name())) {  
+            wallet.setBalance(10000000.0);  
         } else {
-            wallet.setBalance(10.0);  // Default balance for regular users
+            wallet.setBalance(10.0);  
         }
         
-        // Create a new user object and set its properties
         User user = new User();
         user.setFirstname(request.getFirstname());
         user.setLastname(request.getLastname());
         user.setUsername(request.getUsername());
         user.setNumber(request.getNumber());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));  // Encrypt the password
+        user.setPassword(passwordEncoder.encode(request.getPassword()));  
         user.setRole(request.getRole());
         
-        // Save the user to the database
         user = userRepository.save(user);
         
-        // Associate the wallet with the user
         wallet.setUser(user);  
         walletRepository.save(wallet);
         
-        // Set the wallet reference for the user
         user.setWallet(wallet);  
         
-        // Generate a JWT token for the user
         String token = jwtService.generateToken(user);
         
-        // Return the authentication response with the token
         return new AuthenticationResponse(token);
     }
     
     
     public AuthenticationResponse authenticate(User request){
-    // public AuthenticationResponse authenticate(LoginRequestDTO request){
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNumber(),request.getPassword()));
         User user=userRepository.findByNumber(request.getNumber()).orElseThrow();
         String token=jwtService.generateToken(user);

@@ -24,9 +24,14 @@ public class WalletService {
 
     @Autowired
     private UserRepository userRepository;
+   
+
+    @Autowired
+    private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
+
 
     @Transactional
-    public String transferFunds(String senderNumber, String receiverNumber, Double amount) throws IOException {
+    public String transferFunds(String senderNumber, String receiverNumber, Double amount,String mPin) throws IOException {
         User sender = userRepository.findByNumber(senderNumber)
                 .orElseThrow(() -> new RuntimeException("Sender not found"));
         User receiver = userRepository.findByNumber(receiverNumber)
@@ -34,7 +39,10 @@ public class WalletService {
 
         Wallet senderWallet = sender.getWallet();
         Wallet receiverWallet = receiver.getWallet();
-
+        if (!passwordEncoder.matches(mPin, senderWallet.getMPin())) {
+            return "INVALID_MPIN";
+        }
+    
         if (senderWallet.getBalance() < amount) {
             return "Insufficient Balance!";
         }

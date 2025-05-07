@@ -19,7 +19,7 @@ import com.authh.springJwt.Wallet.Response.TransactionDTO;
 
 @RestController
 @RequestMapping("/api/transactions")
-public class TransactionController {
+public class GetTransactionController {
     @Autowired
     private TransactionRepository transactionRepository;
     @GetMapping("/{userId}")
