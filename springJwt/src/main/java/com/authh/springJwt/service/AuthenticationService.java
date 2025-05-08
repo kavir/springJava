@@ -35,6 +35,7 @@ public class AuthenticationService {
     }
     public AuthenticationResponse registerUser(UserRegisterDTO  request) {
         Wallet wallet = new Wallet();
+        System.out.println("the mpin from front end is ______"+request.getMpin());
         if (request.getMpin() == null) {
             throw new IllegalArgumentException("MPin must not be null during registration.");
         }
@@ -53,16 +54,12 @@ public class AuthenticationService {
         user.setNumber(request.getNumber());
         user.setPassword(passwordEncoder.encode(request.getPassword()));  
         user.setRole(request.getRole());
-        
         user = userRepository.save(user);
-        
+        user.setMpin(wallet.getMpin());
         wallet.setUser(user);  
         walletRepository.save(wallet);
-        
         user.setWallet(wallet);  
-        
         String token = jwtService.generateToken(user);
-        
         return new AuthenticationResponse(token);
     }
     
