@@ -54,8 +54,9 @@ public class AuthenticationService {
         user.setNumber(request.getNumber());
         user.setPassword(passwordEncoder.encode(request.getPassword()));  
         user.setRole(request.getRole());
-        user = userRepository.save(user);
         user.setMpin(wallet.getMpin());
+
+        user = userRepository.save(user);
         wallet.setUser(user);  
         walletRepository.save(wallet);
         user.setWallet(wallet);  
