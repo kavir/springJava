@@ -53,7 +53,7 @@ public class SecurityConfig {
                 .build();
     }
 
-    // ✅ Global CORS Configuration Source Bean
+    // ✅ Global CORS Configuration Source Bean vayo
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();

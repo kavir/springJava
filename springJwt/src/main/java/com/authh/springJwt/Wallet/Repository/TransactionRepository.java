@@ -19,4 +19,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findBySender_IdOrReceiver_IdAndDateBetween(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
     List<Transaction> findBySender_IdOrReceiver_IdAndTimestampBetween(Long senderId, Long receiverId, LocalDateTime startDate, LocalDateTime endDate);
     List<Transaction> findBySender_IdOrReceiver_IdAndTimestampAfter(Long senderId, Long receiverId, LocalDateTime timestamp);
+//     LocalDateTime endDate = LocalDateTime.now();
+// return transactionRepository.findBySender_IdOrReceiver_IdAndTimestampBetween(userId, userId, startDate, endDate);
+
 }
