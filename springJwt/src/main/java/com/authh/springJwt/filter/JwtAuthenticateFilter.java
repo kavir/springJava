@@ -16,7 +16,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 
 @Component
@@ -38,6 +37,7 @@ public class JwtAuthenticateFilter extends OncePerRequestFilter {
                 System.out.println("siuuu___Authorization Header: " + authHeader); 
                 if (authHeader == null || !authHeader.startsWith("Bearer ")) { // Note the "!"
                 filterChain.doFilter(request, response);
+                
                 return;
             }
                 String token=authHeader.substring(7);
