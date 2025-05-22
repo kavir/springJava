@@ -21,16 +21,12 @@ public class RewardModel {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    private String rewardName;
-    private String rewardDescription;
+ 
     private int rewardPoints;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     
-    @OneToOne
-    @JoinColumn(name = "transaction_id", nullable = false)
-    private Transaction transaction;
 
 }
