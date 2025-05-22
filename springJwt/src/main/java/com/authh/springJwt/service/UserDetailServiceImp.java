@@ -1,9 +1,11 @@
 package com.authh.springJwt.service;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.authh.springJwt.model.CustomUserDetails;
 import com.authh.springJwt.model.User;
@@ -23,9 +25,16 @@ public boolean isValidNumber(String number) {
     return userRepository.findByNumber(number).isPresent();
 }
 
-public boolean isValidMpin(String number, String mpin) {
-    return userRepository.findByNumberAndMpin(number, mpin).isPresent();
+public boolean isValidMpin(String number, String rawMpin) {
+    Optional<User> userOptional = userRepository.findByNumber(number);
+    if (userOptional.isEmpty()) {
+        return false;
+    }
+    String storedHashedMpin = userOptional.get().getMpin();
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    return encoder.matches(rawMpin, storedHashedMpin);
 }
+
 
 }
 
