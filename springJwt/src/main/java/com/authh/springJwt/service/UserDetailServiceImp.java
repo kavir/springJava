@@ -19,6 +19,13 @@ public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoun
             .orElseThrow(() -> new UsernameNotFoundException("User not found with phone number: " + phoneNumber));
     return new CustomUserDetails(user);
 }
+public boolean isValidNumber(String number) {
+    return userRepository.findByNumber(number).isPresent();
+}
+
+public boolean isValidMpin(String number, String mpin) {
+    return userRepository.findByNumberAndMpin(number, mpin).isPresent();
+}
 
 }
 

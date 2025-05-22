@@ -18,6 +18,7 @@ import com.authh.springJwt.Electricity.model.ElectricityBill;
 import com.authh.springJwt.Electricity.model.MeterReading;
 import com.authh.springJwt.Electricity.service.MeterService;
 import com.authh.springJwt.Wallet.Service.WalletService;
+import com.authh.springJwt.service.UserDetailServiceImp;
 
 @RestController
 // @CrossOrigin(origins = "*")
@@ -28,6 +29,8 @@ public class MeterController {
     private MeterService meterService;
     @Autowired
     private WalletService walletService;
+    @Autowired
+    private UserDetailServiceImp uerDetailServiceImp;
 
     @PostMapping("/submit")
     public ResponseEntity<?> submitReading(@RequestParam Long userId, @RequestParam Double currentReading) {
@@ -55,11 +58,11 @@ public class MeterController {
             if (bill == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bill not found");
             }
-            if (!walletService.isValidNumber(number)) {
+            if (!uerDetailServiceImp.isValidNumber(number)) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid phone number.");
             }
     
-            if (!walletService.isValidMpin(number, mpin)) {
+            if (!uerDetailServiceImp.isValidMpin(number, mpin)) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid MPIN.");
             }
             String senderNumber = number;
@@ -78,8 +81,5 @@ public class MeterController {
         }
     }
 
-    // @PutMapping("/pay/{billId}")
-    // public ResponseEntity<?> payBill(@PathVariable Long billId) {
-    //     return ResponseEntity.ok(meterService.payBill(billId));
-    // }
+    
 }

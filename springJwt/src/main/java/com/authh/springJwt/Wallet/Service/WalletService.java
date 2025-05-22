@@ -79,13 +79,7 @@ public class WalletService {
 
         return "SUCCESS";
     }
-    public boolean isValidNumber(String number) {
-        return walletRepository.findByNumber(number).isPresent();
-    }
-    
-    public boolean isValidMpin(String number, String mpin) {
-        return walletRepository.findByNumberAndMpin(number, mpin).isPresent();
-    }
+   
     
     // Add the getReceiverName method to fetch the receiver's name
     public String getReceiverName(String receiverNumber) {
