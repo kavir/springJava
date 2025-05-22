@@ -42,7 +42,7 @@ public class JwtAuthenticateFilter extends OncePerRequestFilter {
             }
                 String token=authHeader.substring(7);
                 String number=jwtService.extractPhoneNumber(token);
-                System.out.println("siuuu___Token: " + token); //add this line
+                System.out.println("siuuu___Token: " + token); //add this lineeee
                 System.out.println("siuuu___Number: " + number);
                 if(number!=null && SecurityContextHolder.getContext().getAuthentication()==null){
 
