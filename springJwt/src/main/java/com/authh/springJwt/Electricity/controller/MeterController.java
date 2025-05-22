@@ -41,12 +41,27 @@ public class MeterController {
     }
     @PostMapping("/pay/{billId}")
     public ResponseEntity<?> payBill(@PathVariable Long billId,@RequestParam String number,@RequestParam String mpin) {
+        if (billId == null) {
+            return ResponseEntity.badRequest().body("Missing required path variable: billId");
+        }
+        if (number == null || number.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Missing required request parameter: number");
+        }
+        if (mpin == null || mpin.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Missing required request parameter: mpin");
+        }
         try {
             ElectricityBill bill = meterService.getBill(billId);
             if (bill == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bill not found");
             }
-
+            if (!walletService.isValidNumber(number)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid phone number.");
+            }
+    
+            if (!walletService.isValidMpin(number, mpin)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid MPIN.");
+            }
             String senderNumber = number;
             String receiverNumber = "9876543211";
             double amount = bill.getAmount();

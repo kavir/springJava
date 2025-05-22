@@ -8,4 +8,6 @@ import com.authh.springJwt.Wallet.Model.Wallet;
 @Repository
 public interface WalletRepository extends JpaRepository<Wallet, Long> {
     Optional<Wallet> findByUserId(Long userId);
+    Optional<Wallet> findByNumber(String number);
+    Optional<Wallet> findByNumberAndMpin(String number, String mpin);
 }
