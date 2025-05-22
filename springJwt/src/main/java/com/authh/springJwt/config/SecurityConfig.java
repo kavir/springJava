@@ -45,6 +45,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/transactions/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/api/qr/generate**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/ws/transactions**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/api/getRewardPoints**").hasAnyRole("USER", "ADMIN")
                                 .anyRequest().authenticated())
                 .userDetailsService(userDetailServiceImp)
                 .sessionManagement(session -> session
