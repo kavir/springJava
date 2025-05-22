@@ -1,0 +1,36 @@
+package com.authh.springJwt.Reward.Model;
+
+import com.authh.springJwt.Wallet.Model.Transaction;
+import com.authh.springJwt.model.User;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name = "reward")
+public class RewardModel {
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+    private String rewardName;
+    private String rewardDescription;
+    private int rewardPoints;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+    
+    @OneToOne
+    @JoinColumn(name = "transaction_id", nullable = false)
+    private Transaction transaction;
+
+}
