@@ -12,7 +12,7 @@ public class RewardService {
 
     public String fetchRewardPoints(Long userId) {
         return rewardRepository.findByUserId(userId)
-                .map(reward -> "Reward Points: " + reward.getRewardPoints())
+                .map(reward -> "" + reward.getRewardPoints())
                 .orElse("User not found or no reward assigned.");
     }
    
