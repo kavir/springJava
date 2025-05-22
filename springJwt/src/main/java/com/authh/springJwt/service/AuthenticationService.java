@@ -61,7 +61,7 @@ public class AuthenticationService {
         walletRepository.save(wallet);
         user.setWallet(wallet);  
         String token = jwtService.generateToken(user);
-        return new AuthenticationResponse(token);
+        return new AuthenticationResponse(token,"Registration successful");
     }
     
     
@@ -69,7 +69,7 @@ public class AuthenticationService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNumber(),request.getPassword()));
         User user=userRepository.findByNumber(request.getNumber()).orElseThrow();
         String token=jwtService.generateToken(user);
-        return new AuthenticationResponse(token);
+        return new AuthenticationResponse(token,"Login successful");
 
     }
     

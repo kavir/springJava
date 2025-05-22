@@ -3,11 +3,16 @@ package com.authh.springJwt.service;
 public class AuthenticationResponse {
 
     private String token;
-    public AuthenticationResponse(String token) {
+    private String message;
+    public AuthenticationResponse(String token,String message) {
         this.token = token;
+        this.message = message;
     }
     public String getToken() {
         return token;
+    }
+    public String getMessage() {
+        return message;
     }
 
 }
