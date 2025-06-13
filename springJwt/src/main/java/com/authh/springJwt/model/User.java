@@ -49,6 +49,9 @@ public class User implements UserDetails {
     @JsonProperty("mpin")
     private String mpin;
 
+    @Column(name = "profile_picture")
+    private String profilePicture;
+
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Wallet wallet;  

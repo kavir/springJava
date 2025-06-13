@@ -2,6 +2,7 @@ package com.authh.springJwt.Wallet.Model;
 
 import com.authh.springJwt.model.User;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +20,9 @@ public class Wallet {//wallet
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    // @Column(name = "profile_picture")
+    // private String profilePicture;
 
     private Double balance = 0.0;
     private String mpin;

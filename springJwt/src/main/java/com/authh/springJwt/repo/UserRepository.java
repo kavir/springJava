@@ -3,8 +3,6 @@ package com.authh.springJwt.repo;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import com.authh.springJwt.Wallet.Model.Wallet;
 import com.authh.springJwt.model.User;
 
 @Repository

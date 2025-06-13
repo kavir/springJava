@@ -1,25 +1,33 @@
 package com.authh.springJwt.Wallet.Controller;
 
 import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.authh.springJwt.Wallet.Model.TransferResponse;
 import com.authh.springJwt.Wallet.Model.Wallet;
+import com.authh.springJwt.Wallet.Response.UserUpdateRequest;
 import com.authh.springJwt.Wallet.Response.UserWalletResponse;
 import com.authh.springJwt.Wallet.Service.WalletService;
 import com.authh.springJwt.model.User;
+import com.authh.springJwt.service.UserDetailServiceImp;
 
 @RestController
 @RequestMapping("/api/wallet")
 public class WalletController {
     @Autowired
     private WalletService walletService;
+    @Autowired
+    private UserDetailServiceImp userDetailServiceImp;
+   
 
     @PostMapping("/transfer")
 public ResponseEntity<TransferResponse> transferFunds(@RequestParam String senderNumber,
@@ -93,12 +101,33 @@ public ResponseEntity<TransferResponse> transferFunds(@RequestParam String sende
         User user = wallet.getUser();
         Long id=user.getId();
         String userName = user.getFirstname() + " " + user.getLastname();
+        String firstName = user.getFirstname() ;
+        String lastName =  user.getLastname();
         String userPhoneNumber = user.getNumber();
+        String userProfile= user.getProfilePicture() != null ? user.getProfilePicture() : "default.png"; 
         Double walletBalance = wallet.getBalance();
     
-        UserWalletResponse response = new UserWalletResponse(id,userName, userPhoneNumber, walletBalance);
+        UserWalletResponse response = new UserWalletResponse(id,userName, userPhoneNumber,userProfile, walletBalance,firstName,lastName);
     
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/updateUser")
+    public ResponseEntity<?> updateUser(@RequestBody UserUpdateRequest request) {
+        try {
+            User updatedUser = userDetailServiceImp.updateUser(request);
+            return ResponseEntity.ok("User updated successfully");
+        } catch (UsernameNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        } catch (IllegalArgumentException ex) {
+            // This can handle invalid Role enum parsing
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid role provided");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
+    }
+
+
+
     
 }
