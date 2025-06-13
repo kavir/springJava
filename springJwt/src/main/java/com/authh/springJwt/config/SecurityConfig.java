@@ -58,15 +58,33 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("*")); // for dynamic frontend domains
+
+        // Use specific origins only if allowCredentials is true
+        config.setAllowedOrigins(List.of(
+            "https://emichaa.netlify.app",
+            "http://localhost:3000" // (optional) add dev frontend too
+        ));
+
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true); // if using cookies or Authorization headers
+        config.setAllowCredentials(true); // for cookies/auth headers
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
+    // public CorsConfigurationSource corsConfigurationSource() {
+    //     CorsConfiguration config = new CorsConfiguration();
+    //     config.setAllowedOriginPatterns(List.of("*")); // for dynamic frontend domains
+    //     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    //     config.setAllowedHeaders(List.of("*"));
+    //     config.setAllowCredentials(true); // if using cookies or Authorization headers
+
+    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    //     source.registerCorsConfiguration("/**", config);
+    //     return source;
+    // }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
