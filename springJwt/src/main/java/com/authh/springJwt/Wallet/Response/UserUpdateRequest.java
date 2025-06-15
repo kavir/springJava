@@ -12,6 +12,6 @@ public class UserUpdateRequest {
     // private String password; // optional, update if provided
     // private String mpin;
     private String profilePicture; // optional
-    // private String role; 
+    // private String role; //
     
 }
