@@ -42,6 +42,7 @@ public class UserDetailServiceImp implements UserDetailsService {
     }
 
     public User updateUser(UserUpdateRequest request) {
+        System.out.println("Updating user with request: " + request);
         User user = userRepository.findByNumber(request.getNumber())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     
@@ -76,6 +77,7 @@ public class UserDetailServiceImp implements UserDetailsService {
                 throw new RuntimeException("Invalid role: " + request.getRole());
             }
         }
+        System.out.println("User after update: " + user);
     
         return userRepository.save(user);
     }
