@@ -99,7 +99,7 @@ public ResponseEntity<TransferResponse> transferFunds(@RequestParam String sende
         }
     
         User user = wallet.getUser();
-        Long id=user.getId();
+        Long userId=user.getId();
         String userName = user.getFirstname() + " " + user.getLastname();
         String firstName = user.getFirstname() ;
         String lastName =  user.getLastname();
@@ -107,7 +107,7 @@ public ResponseEntity<TransferResponse> transferFunds(@RequestParam String sende
         String userProfile= user.getProfilePicture() != null ? user.getProfilePicture() : "default.png"; 
         Double walletBalance = wallet.getBalance();
     
-        UserWalletResponse response = new UserWalletResponse(id,userName, userPhoneNumber,userProfile, walletBalance,firstName,lastName);
+        UserWalletResponse response = new UserWalletResponse(userId,userName, userPhoneNumber,userProfile, walletBalance,firstName,lastName);
     
         return ResponseEntity.ok(response);
     }
