@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserWalletResponse {
-    private Long id;
+    private Long userId;
     private String userName;
     private String firstName;
     private String lastName;
@@ -13,8 +13,8 @@ public class UserWalletResponse {
     private Double walletBalance;
 
     // Constructor, getters, and setters
-    public UserWalletResponse(Long id,String userName, String userPhoneNumber,String userProfile, Double walletBalance,String firstName,String lastName) {
-        this.id=id;
+    public UserWalletResponse(Long userId,String userName, String userPhoneNumber,String userProfile, Double walletBalance,String firstName,String lastName) {
+        this.userId=userId;
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
