@@ -54,29 +54,29 @@ public class UserDetailServiceImp implements UserDetailsService {
             user.setLastname(request.getLastname());
         }
     
-        if (request.getUsername() != null) {
-            user.setUsername(request.getUsername());
-        }
+        // if (request.getUsername() != null) {
+        //     user.setUsername(request.getUsername());
+        // }
     
-        if (request.getPassword() != null && !request.getPassword().isBlank()) {
-            user.setPassword(passwordEncoder.encode(request.getPassword()));
-        }
+        // if (request.getPassword() != null && !request.getPassword().isBlank()) {
+        //     user.setPassword(passwordEncoder.encode(request.getPassword()));
+        // }
     
-        if (request.getMpin() != null) {
-            user.setMpin(request.getMpin());
-        }
+        // if (request.getMpin() != null) {
+        //     user.setMpin(request.getMpin());
+        // }
     
         if (request.getProfilePicture() != null) {
             user.setProfilePicture(request.getProfilePicture());
         }
     
-        if (request.getRole() != null) {
-            try {
-                user.setRole(Role.valueOf(request.getRole()));
-            } catch (IllegalArgumentException e) {
-                throw new RuntimeException("Invalid role: " + request.getRole());
-            }
-        }
+        // if (request.getRole() != null) {
+        //     try {
+        //         user.setRole(Role.valueOf(request.getRole()));
+        //     } catch (IllegalArgumentException e) {
+        //         throw new RuntimeException("Invalid role: " + request.getRole());
+        //     }
+        // }
         System.out.println("User after update: " + user);
     
         return userRepository.save(user);
