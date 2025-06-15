@@ -24,36 +24,4 @@ public class UserWalletResponse {
        
     }
 
-    // // Getters and setters...
-    // public String getUserName() {
-    //     return userName;
-    // }
-    // public Long getUserId() {
-    //     return id;
-    // }
-    // public String getUserProfile() {
-    //     return userProfile;
-    // }
-
-    // public void setUserName(String userName) {
-    //     this.userName = userName;
-    // }
-    // public void setUserProfile(String userProfile) {
-    //     this.userProfile = userProfile;
-    // }
-
-    // public String getUserPhoneNumber() {
-    //     return userPhoneNumber;
-    // }
-
-    // public void setUserPhoneNumber(String userPhoneNumber) {
-    //     this.userPhoneNumber = userPhoneNumber;
-    // }
-    // public Double getWalletBalance() {
-    //     return walletBalance;
-    // }
-
-    // public void setWalletBalance(Double walletBalance) {
-    //     this.walletBalance = walletBalance;
-    // }
 }

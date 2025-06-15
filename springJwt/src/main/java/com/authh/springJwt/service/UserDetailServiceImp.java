@@ -40,32 +40,72 @@ public class UserDetailServiceImp implements UserDetailsService {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.matches(rawMpin, storedHashedMpin);
     }
-     public User updateUser(UserUpdateRequest request) {
+
+    public User updateUser(UserUpdateRequest request) {
         User user = userRepository.findByNumber(request.getNumber())
-                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        if (request.getFirstname() != null) user.setFirstname(request.getFirstname());
-        if (request.getLastname() != null) user.setLastname(request.getLastname());
-        if (request.getUsername() != null) user.setUsername(request.getUsername());
-
-        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    
+        if (request.getFirstname() != null) {
+            user.setFirstname(request.getFirstname());
+        }
+    
+        if (request.getLastname() != null) {
+            user.setLastname(request.getLastname());
+        }
+    
+        if (request.getUsername() != null) {
+            user.setUsername(request.getUsername());
+        }
+    
+        if (request.getPassword() != null && !request.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(request.getPassword()));
         }
-
+    
         if (request.getMpin() != null) {
             user.setMpin(request.getMpin());
         }
-
+    
         if (request.getProfilePicture() != null) {
             user.setProfilePicture(request.getProfilePicture());
         }
-
+    
         if (request.getRole() != null) {
-            user.setRole(Role.valueOf(request.getRole())); // add error handling if invalid role
+            try {
+                user.setRole(Role.valueOf(request.getRole()));
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException("Invalid role: " + request.getRole());
+            }
         }
-
+    
         return userRepository.save(user);
     }
+    
+    //  public User updateUser(UserUpdateRequest request) {
+    //     User user = userRepository.findByNumber(request.getNumber())
+    //                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+    //     if (request.getFirstname() != null) user.setFirstname(request.getFirstname());
+    //     if (request.getLastname() != null) user.setLastname(request.getLastname());
+    //     if (request.getUsername() != null) user.setUsername(request.getUsername());
+
+    //     if (request.getPassword() != null && !request.getPassword().isEmpty()) {
+    //         user.setPassword(passwordEncoder.encode(request.getPassword()));
+    //     }
+
+    //     if (request.getMpin() != null) {
+    //         user.setMpin(request.getMpin());
+    //     }
+
+    //     if (request.getProfilePicture() != null) {
+    //         user.setProfilePicture(request.getProfilePicture());
+    //     }
+
+    //     if (request.getRole() != null) {
+    //         user.setRole(Role.valueOf(request.getRole())); // add error handling if invalid role
+    //     }
+
+    //     return userRepository.save(user);
+    // }
 
 ///
 }

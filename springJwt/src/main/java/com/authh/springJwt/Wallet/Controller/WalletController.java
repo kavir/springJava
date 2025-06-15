@@ -118,16 +118,12 @@ public ResponseEntity<TransferResponse> transferFunds(@RequestParam String sende
             // Call the service method to update user, no need to assign if not used
             userDetailServiceImp.updateUser(request);
             
-            // Return success message
             return ResponseEntity.ok("User updated successfully");
         } catch (UsernameNotFoundException ex) {
-            // User not found case
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         } catch (IllegalArgumentException ex) {
-            // Invalid role string parsing case
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid role provided");
         } catch (Exception ex) {
-            // General error handling
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
     }
