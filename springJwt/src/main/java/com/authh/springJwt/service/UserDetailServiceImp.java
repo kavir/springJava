@@ -46,12 +46,12 @@ public class UserDetailServiceImp implements UserDetailsService {
         User user = userRepository.findByNumber(request.getNumber())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     
-        if (request.getFirstname() != null) {
-            user.setFirstname(request.getFirstname());
+        if (request.getFirstName() != null) {
+            user.setFirstname(request.getFirstName());
         }
     
-        if (request.getLastname() != null) {
-            user.setLastname(request.getLastname());
+        if (request.getLastName() != null) {
+            user.setLastname(request.getLastName());
         }
     
         // if (request.getUsername() != null) {
