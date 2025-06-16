@@ -42,7 +42,7 @@ public class UserDetailServiceImp implements UserDetailsService {
     }
 
     public User updateUser(UserUpdateRequest request) {
-        System.out.println("Updating user with request: " + request);
+        System.out.println("Updating user with request: " + request.getNumber());
         User user = userRepository.findByNumber(request.getNumber())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     
@@ -54,29 +54,12 @@ public class UserDetailServiceImp implements UserDetailsService {
             user.setLastname(request.getLastName());
         }
     
-        // if (request.getUsername() != null) {
-        //     user.setUsername(request.getUsername());
-        // }
-    
-        // if (request.getPassword() != null && !request.getPassword().isBlank()) {
-        //     user.setPassword(passwordEncoder.encode(request.getPassword()));
-        // }
-    
-        // if (request.getMpin() != null) {
-        //     user.setMpin(request.getMpin());
-        // }
     
         if (request.getProfilePicture() != null) {
             user.setProfilePicture(request.getProfilePicture());
         }
     
-        // if (request.getRole() != null) {
-        //     try {
-        //         user.setRole(Role.valueOf(request.getRole()));
-        //     } catch (IllegalArgumentException e) {
-        //         throw new RuntimeException("Invalid role: " + request.getRole());
-        //     }
-        // }
+        
         System.out.println("User after update: " + user);
     
         return userRepository.save(user);
