@@ -30,7 +30,7 @@ public class WalletService {
     private UserRepository userRepository;
     @Autowired
     private RewardRepository rewardRepository;
-   
+    double serviceChargePercentage;
 
     @Autowired
     private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
@@ -53,19 +53,37 @@ public class WalletService {
             return "Insufficient Balance!";
         }
         transactionService.processTransaction(senderNumber, receiverNumber, amount);
+        if (amount <= 100) {
+            serviceChargePercentage = 0.08;  // percentage
+        } else if (amount <= 500) {
+            serviceChargePercentage = 0.09;  // percentage
+        } else if (amount <= 1000) {
+            serviceChargePercentage = 0.1;  //percentage
+        } else if (amount <= 5000) {
+            serviceChargePercentage = 0.2;
+        } else if (amount <= 10000) {
+            serviceChargePercentage = 0.2;
+        } else {
+            serviceChargePercentage = 0.1;
+        }
+        double serviceChargeAmount=(serviceChargePercentage * amount) / 100.0;
 
         // Deduct from sender and credit to receiver
-        senderWallet.setBalance(senderWallet.getBalance() - amount);
-        receiverWallet.setBalance(receiverWallet.getBalance() + amount);
+        double totalDebit=amount+serviceChargeAmount;
+        senderWallet.setBalance(senderWallet.getBalance() - totalDebit);
+        receiverWallet.setBalance(receiverWallet.getBalance() + (amount));
 
         walletRepository.save(senderWallet);
         walletRepository.save(receiverWallet);
 
         // Save transaction record
-        Transaction transaction = new Transaction(sender, receiver, amount, "SUCCESS");
+        Transaction transaction = new Transaction(sender, receiver, amount,serviceChargeAmount, "SUCCESS");
         transactionRepository.save(transaction);
 
         double rewardPointsEarned =  amount / 500.0;
+
+      
+        
        
             RewardModel reward = rewardRepository.findByUser(sender).orElse(null);
             if (reward == null) {
@@ -80,13 +98,10 @@ public class WalletService {
 
         return "SUCCESS";
     }
-   
-    
     // Add the getReceiverName method to fetch the receiver's name
     public String getReceiverName(String receiverNumber) {
         User receiver = userRepository.findByNumber(receiverNumber)
                 .orElseThrow(() -> new RuntimeException("Receiver not found"));
-        
         // Combine firstName and lastName to form the full name
         String fullName = receiver.getFirstname() + " " + receiver.getLastname();
         
