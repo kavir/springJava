@@ -65,8 +65,8 @@ public class WalletService {
         Transaction transaction = new Transaction(sender, receiver, amount, "SUCCESS");
         transactionRepository.save(transaction);
 
-        double rewardPointsEarned = (double) (amount / 500);
-        if (rewardPointsEarned > 0) {
+        double rewardPointsEarned =  amount / 500.0;
+       
             RewardModel reward = rewardRepository.findByUser(sender).orElse(null);
             if (reward == null) {
                 reward = new RewardModel();
@@ -76,7 +76,7 @@ public class WalletService {
 
             reward.setRewardPoints(reward.getRewardPoints() + rewardPointsEarned);
             rewardRepository.save(reward);
-        }
+        
 
         return "SUCCESS";
     }
