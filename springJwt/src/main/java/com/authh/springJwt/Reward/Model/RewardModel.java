@@ -22,7 +22,7 @@ public class RewardModel {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
  
-    private int rewardPoints;
+    private double rewardPoints;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

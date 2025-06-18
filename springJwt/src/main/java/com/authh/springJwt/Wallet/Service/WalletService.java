@@ -65,18 +65,18 @@ public class WalletService {
         Transaction transaction = new Transaction(sender, receiver, amount, "SUCCESS");
         transactionRepository.save(transaction);
 
-        int rewardPointsEarned = (int) (amount / 500);
-    if (rewardPointsEarned > 0) {
-        RewardModel reward = rewardRepository.findByUser(sender).orElse(null);
-        if (reward == null) {
-            reward = new RewardModel();
-            reward.setUser(sender);
-            reward.setRewardPoints(0);
-        }
+        double rewardPointsEarned = (double) (amount / 500);
+        if (rewardPointsEarned > 0) {
+            RewardModel reward = rewardRepository.findByUser(sender).orElse(null);
+            if (reward == null) {
+                reward = new RewardModel();
+                reward.setUser(sender);
+                reward.setRewardPoints(0);
+            }
 
-        reward.setRewardPoints(reward.getRewardPoints() + rewardPointsEarned);
-        rewardRepository.save(reward);
-    }
+            reward.setRewardPoints(reward.getRewardPoints() + rewardPointsEarned);
+            rewardRepository.save(reward);
+        }
 
         return "SUCCESS";
     }
