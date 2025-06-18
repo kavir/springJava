@@ -19,8 +19,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
-
+@ToString(exclude = {"wallet", "reward"}) 
 @Data
 @Entity
 @Table(name = "authenticusers")
@@ -55,6 +56,7 @@ public class User implements UserDetails {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Wallet wallet;  
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private RewardModel reward;
 

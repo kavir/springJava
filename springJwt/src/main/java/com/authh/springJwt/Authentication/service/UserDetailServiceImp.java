@@ -61,7 +61,10 @@ public class UserDetailServiceImp implements UserDetailsService {
         }
     
         
-        System.out.println("User after update: " + user);
+        System.out.println("User after update: First Name = " + user.getFirstname() +
+        ", Last Name = " + user.getLastname() +
+        ", Profile Picture = " + user.getProfilePicture());
+
     
         return userRepository.save(user);
     }
