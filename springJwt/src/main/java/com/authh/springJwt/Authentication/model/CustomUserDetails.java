@@ -1,4 +1,4 @@
-package com.authh.springJwt.model;
+package com.authh.springJwt.Authentication.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

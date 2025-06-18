@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.authh.springJwt.Authentication.model.User;
+import com.authh.springJwt.Authentication.service.UserDetailServiceImp;
 import com.authh.springJwt.Wallet.Model.TransferResponse;
 import com.authh.springJwt.Wallet.Model.Wallet;
 import com.authh.springJwt.Wallet.Response.UserUpdateRequest;
 import com.authh.springJwt.Wallet.Response.UserWalletResponse;
 import com.authh.springJwt.Wallet.Service.WalletService;
-import com.authh.springJwt.model.User;
-import com.authh.springJwt.service.UserDetailServiceImp;
 
 @RestController
 @RequestMapping("/api/wallet")

@@ -1,4 +1,4 @@
-package com.authh.springJwt.service;
+package com.authh.springJwt.Authentication.service;
 
 public class AuthenticationResponse {
 

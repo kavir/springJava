@@ -1,7 +1,7 @@
 package com.authh.springJwt.Reward.Model;
 
+import com.authh.springJwt.Authentication.model.User;
 import com.authh.springJwt.Wallet.Model.Transaction;
-import com.authh.springJwt.model.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

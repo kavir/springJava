@@ -1,9 +1,10 @@
-package com.authh.springJwt.repo;
+package com.authh.springJwt.Authentication.repo;
 
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.authh.springJwt.model.User;
+
+import com.authh.springJwt.Authentication.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {

@@ -1,4 +1,4 @@
-package com.authh.springJwt.model;
+package com.authh.springJwt.Authentication.model;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 @Data

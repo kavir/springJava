@@ -1,3 +1,4 @@
+package com.authh.springJwt.Security.config;
 // package com.authh.springJwt.config;
 
 // import org.springframework.beans.factory.annotation.Autowired;

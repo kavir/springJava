@@ -1,7 +1,9 @@
 package com.authh.springJwt.Wallet.Model;
 
 import java.time.LocalDateTime;
-import com.authh.springJwt.model.User;
+
+import com.authh.springJwt.Authentication.model.User;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

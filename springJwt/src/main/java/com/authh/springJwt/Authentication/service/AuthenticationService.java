@@ -1,17 +1,18 @@
-package com.authh.springJwt.service;
+package com.authh.springJwt.Authentication.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.authh.springJwt.Authentication.model.User;
+import com.authh.springJwt.Authentication.model.UserRegisterDTO;
+import com.authh.springJwt.Authentication.repo.UserRepository;
 // import com.authh.springJwt.AuthDTO.LoginRequestDTO;
 // import com.authh.springJwt.AuthDTO.RegisterRequestDTO;
 import com.authh.springJwt.Wallet.Model.Wallet;
 import com.authh.springJwt.Wallet.Repository.WalletRepository;
-import com.authh.springJwt.model.User;
-import com.authh.springJwt.model.UserRegisterDTO;
-import com.authh.springJwt.repo.UserRepository;
 
 @Service
 public class AuthenticationService {

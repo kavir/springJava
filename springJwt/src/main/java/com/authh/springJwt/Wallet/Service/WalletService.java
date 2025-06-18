@@ -5,14 +5,15 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.authh.springJwt.Authentication.model.User;
+import com.authh.springJwt.Authentication.repo.UserRepository;
 import com.authh.springJwt.Reward.Model.RewardModel;
 import com.authh.springJwt.Reward.Repository.RewardRepository;
 import com.authh.springJwt.Wallet.Model.Transaction;
 import com.authh.springJwt.Wallet.Model.Wallet;
 import com.authh.springJwt.Wallet.Repository.TransactionRepository;
 import com.authh.springJwt.Wallet.Repository.WalletRepository;
-import com.authh.springJwt.model.User;
-import com.authh.springJwt.repo.UserRepository;
+
 import jakarta.transaction.Transactional;
 
 @Service

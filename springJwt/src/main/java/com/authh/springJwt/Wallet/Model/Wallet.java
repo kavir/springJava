@@ -1,6 +1,6 @@
 package com.authh.springJwt.Wallet.Model;
 
-import com.authh.springJwt.model.User;
+import com.authh.springJwt.Authentication.model.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

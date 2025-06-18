@@ -1,4 +1,4 @@
-package com.authh.springJwt.service;
+package com.authh.springJwt.Authentication.service;
 
 import java.util.Date;
 import java.util.function.Function;
@@ -7,8 +7,9 @@ import javax.crypto.SecretKey;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.authh.springJwt.model.CustomUserDetails;
-import com.authh.springJwt.model.User;
+import com.authh.springJwt.Authentication.model.CustomUserDetails;
+import com.authh.springJwt.Authentication.model.User;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

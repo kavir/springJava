@@ -1,4 +1,4 @@
-package com.authh.springJwt.service;
+package com.authh.springJwt.Authentication.service;
 
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +8,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.authh.springJwt.Authentication.model.CustomUserDetails;
+import com.authh.springJwt.Authentication.model.Role;
+import com.authh.springJwt.Authentication.model.User;
+import com.authh.springJwt.Authentication.repo.UserRepository;
 import com.authh.springJwt.Wallet.Response.UserUpdateRequest;
-import com.authh.springJwt.model.CustomUserDetails;
-import com.authh.springJwt.model.Role;
-import com.authh.springJwt.model.User;
-import com.authh.springJwt.repo.UserRepository;
 
 @Service
 public class UserDetailServiceImp implements UserDetailsService {

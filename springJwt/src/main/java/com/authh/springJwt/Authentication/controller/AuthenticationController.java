@@ -1,14 +1,12 @@
-package com.authh.springJwt.controller;
+package com.authh.springJwt.Authentication.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-// import com.authh.springJwt.AuthDTO.LoginRequestDTO;
-// import com.authh.springJwt.AuthDTO.RegisterRequestDTO;
-import com.authh.springJwt.model.User;
-import com.authh.springJwt.model.UserRegisterDTO;
-import com.authh.springJwt.service.AuthenticationResponse;
-import com.authh.springJwt.service.AuthenticationService;
+import com.authh.springJwt.Authentication.model.User;
+import com.authh.springJwt.Authentication.model.UserRegisterDTO;
+import com.authh.springJwt.Authentication.service.AuthenticationResponse;
+import com.authh.springJwt.Authentication.service.AuthenticationService;
 
 import jakarta.validation.Valid;
 

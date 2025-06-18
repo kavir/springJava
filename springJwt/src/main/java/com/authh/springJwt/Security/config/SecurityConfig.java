@@ -1,7 +1,8 @@
-package com.authh.springJwt.config;
+package com.authh.springJwt.Security.config;
 
-import com.authh.springJwt.filter.JwtAuthenticateFilter;
-import com.authh.springJwt.service.UserDetailServiceImp;
+import com.authh.springJwt.Authentication.service.UserDetailServiceImp;
+import com.authh.springJwt.Security.filter.JwtAuthenticateFilter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
