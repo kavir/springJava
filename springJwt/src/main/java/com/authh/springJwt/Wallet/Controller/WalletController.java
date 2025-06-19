@@ -69,6 +69,7 @@ public class WalletController {
                 receiverName,
                 receiverNumber
         );
+        System.out.println("Response: " + response.getAmount() + " " + response.getServiceChargeAmount());
     
         return switch (status) {
             case "SUCCESS" -> ResponseEntity.ok(response);
