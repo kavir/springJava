@@ -62,8 +62,8 @@ public class WalletController {
                     case "SUCCESS" -> "Transfer completed successfully";
                     default -> "Transfer failed";
                 },
-                serviceChargeAmount,
                 actualAmount,
+                serviceChargeAmount,
                 receiverName,
                 receiverNumber
         );
