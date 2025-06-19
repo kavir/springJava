@@ -68,7 +68,7 @@ public class WalletService {
             serviceChargePercentage = 0.2;
         } else {
             serviceChargePercentage = 0.1;
-        }
+        }///
 
         double serviceChargeAmount = (serviceChargePercentage * amount) / 100.0;
         double totalDebit = amount + serviceChargeAmount;
