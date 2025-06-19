@@ -47,11 +47,11 @@ public class WalletService {
         Wallet receiverWallet = receiver.getWallet();
 
         if (!passwordEncoder.matches(mpin, senderWallet.getMpin())) {
-            return new WalletTransferResult("INVALID_MPIN", 0.0);
+            return new WalletTransferResult("INVALID_MPIN", 0.0,amount);
         }
 
         if (senderWallet.getBalance() < amount) {
-            return new WalletTransferResult("INSUFFICIENT_BALANCE", 0.0);
+            return new WalletTransferResult("INSUFFICIENT_BALANCE", 0.0,amount);
         }
 
         transactionService.processTransaction(senderNumber, receiverNumber, amount);
@@ -92,7 +92,7 @@ public class WalletService {
         reward.setRewardPoints(reward.getRewardPoints() + rewardPointsEarned);
         rewardRepository.save(reward);
 
-        return new WalletTransferResult("SUCCESS", serviceChargeAmount);
+        return new WalletTransferResult("SUCCESS", serviceChargeAmount,amount);
     }
 
     // @Transactional

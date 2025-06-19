@@ -12,8 +12,9 @@ import lombok.NoArgsConstructor;
 public class TransferResponse {
     private String status;
     private String message;
-    private Double serviceChargeAmount;
     private Double amount;
+    private Double serviceChargeAmount;
+
     private String receiverName;
     private String receiverNumber;
 }
