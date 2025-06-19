@@ -2,6 +2,7 @@ package com.authh.springJwt.Authentication.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,9 @@ public class AuthenticationService {
             throw new IllegalArgumentException("MPin must not be null during registration.");
         }
         wallet.setMpin(passwordEncoder.encode(request.getMpin().toString()));
+        if (userRepository.findByNumber(request.getNumber()).isPresent()) {
+            throw new IllegalArgumentException("Phone number already registered.");
+        }
 
         if ("ADMIN".equalsIgnoreCase(request.getRole().name())) {  
             wallet.setBalance(10000000.0);  
@@ -67,8 +71,13 @@ public class AuthenticationService {
     
     
     public AuthenticationResponse authenticate(User request){
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNumber(),request.getPassword()));
-        User user=userRepository.findByNumber(request.getNumber()).orElseThrow();
+        try{
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNumber(),request.getPassword()));}
+        catch (Exception e) {
+            throw new BadCredentialsException("Invalid phone number or password");
+        }
+        User user = userRepository.findByNumber(request.getNumber())
+        .orElseThrow(() -> new BadCredentialsException("Phone number or password is incorrect"));
         String token=jwtService.generateToken(user);
         return new AuthenticationResponse(token,"Login successful");
 
