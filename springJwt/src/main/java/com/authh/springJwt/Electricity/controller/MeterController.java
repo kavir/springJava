@@ -45,6 +45,7 @@ public class MeterController {
     }
     @PostMapping("/pay/{billId}")
     public ResponseEntity<?> payBill(@PathVariable Long billId,@RequestParam String number,@RequestParam String mpin) {
+        System.out.println("Paying bill with ID: " + billId + ", number: " + number );
         if (billId == null) {
             return ResponseEntity.badRequest().body("Missing required path variable: billId");
         }

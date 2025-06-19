@@ -106,6 +106,9 @@ public class WalletController {
 
     @PutMapping("/updateUser")
     public ResponseEntity<?> updateUser(@RequestBody UserUpdateRequest request) {
+        System.out.println("Updating user with request: " + request.getNumber());
+        System.out.println("First Name: " + request.getFirstName());
+        System.out.println("Last Name: " + request.getLastName());
         try {
             // Call the service method to update user, no need to assign if not used
             userDetailServiceImp.updateUser(request);

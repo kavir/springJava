@@ -18,6 +18,7 @@ public class RewardPointController {
 
     @GetMapping("/getRewardPoints/{userId}")
     public String getRewardPoints(@PathVariable String userId) {
+        System.out.println("Fetching reward points for user ID: " + userId);
         return rewardService.fetchRewardPoints(Long.parseLong(userId));
     }
     
