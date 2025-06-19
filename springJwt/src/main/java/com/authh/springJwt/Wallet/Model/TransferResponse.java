@@ -1,18 +1,22 @@
 package com.authh.springJwt.Wallet.Model;
 
+import lombok.Data;
 
+@Data
 public class TransferResponse {
     private String status;
     private String message;
-    private Double amount;
+    private double serviceChargeAmount;
+    private double amount;
     private String receiverName;
     private String receiverNumber;
 
     // Constructor
-    public TransferResponse(String status, String message, Double amount, String receiverName, String receiverNumber) {
+    public TransferResponse(String status, String message, double amount,double serviceChargeAmount, String receiverName, String receiverNumber) {
         this.status = status;
         this.message = message;
         this.amount = amount;
+        this.serviceChargeAmount = serviceChargeAmount;
         this.receiverName = receiverName;
         this.receiverNumber = receiverNumber;
     }
@@ -39,6 +43,13 @@ public class TransferResponse {
     }
 
     public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+    public Double getServiceChargeAmount() {
+        return amount;
+    }
+
+    public void setserviceChargeAmount(Double amount) {
         this.amount = amount;
     }
 

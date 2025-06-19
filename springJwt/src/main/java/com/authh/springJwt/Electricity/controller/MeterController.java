@@ -18,6 +18,7 @@ import com.authh.springJwt.Authentication.service.UserDetailServiceImp;
 import com.authh.springJwt.Electricity.model.ElectricityBill;
 import com.authh.springJwt.Electricity.model.MeterReading;
 import com.authh.springJwt.Electricity.service.MeterService;
+import com.authh.springJwt.Wallet.Response.WalletTransferResult;
 import com.authh.springJwt.Wallet.Service.WalletService;
 
 @RestController
@@ -69,7 +70,8 @@ public class MeterController {
             String receiverNumber = "9876543211";
             double amount = bill.getAmount();
 
-            String transferStatus = walletService.transferFunds(senderNumber, receiverNumber, amount,mpin);
+            WalletTransferResult result = walletService.transferFunds(senderNumber, receiverNumber, amount, mpin);
+            String transferStatus = result.getStatus();
             if (!transferStatus.equalsIgnoreCase("SUCCESS")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Payment failed: " + transferStatus);
             }
