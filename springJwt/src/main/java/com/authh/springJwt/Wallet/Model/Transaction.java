@@ -32,18 +32,18 @@ public class Transaction {
     private User receiver;
 
     private Double amount;
-    private Double serviceChargeAmount;
+    // private Double serviceChargeAmount;
     private LocalDateTime timestamp = LocalDateTime.now();
     private String status;
 
     public Transaction() {
     }
 
-    public Transaction(User sender, User receiver, Double amount,Double serviceChargeAmount, String status) {
+    public Transaction(User sender, User receiver, Double amount, String status) {
         this.sender = sender;
         this.receiver = receiver;
         this.amount = amount;
-        this.serviceChargeAmount = serviceChargeAmount; // Default service charge, can be set later
+        // this.serviceChargeAmount = serviceChargeAmount; // Default service charge, can be set later
         this.status = status;
     }
 }

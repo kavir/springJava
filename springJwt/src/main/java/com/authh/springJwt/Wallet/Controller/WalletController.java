@@ -53,6 +53,8 @@ public class WalletController {
         double serviceChargeAmount = result.getServiceChargeAmount();
         double actualAmount = result.getAmount();
         String receiverName = walletService.getReceiverName(receiverNumber);
+        System.out.println("amount 2: " + actualAmount);
+        System.out.println("serviceamount 2: " + serviceChargeAmount);
     
         TransferResponse response = new TransferResponse(
                 status.equals("SUCCESS") ? "success" : "failure",
