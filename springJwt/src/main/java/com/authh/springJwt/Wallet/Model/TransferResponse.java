@@ -46,11 +46,11 @@ public class TransferResponse {
         this.amount = amount;
     }
     public Double getServiceChargeAmount() {
-        return amount;
+        return serviceChargeAmount;
     }
 
-    public void setserviceChargeAmount(Double amount) {
-        this.amount = amount;
+    public void setserviceChargeAmount(Double serviceChargeAmount) {
+        this.serviceChargeAmount = serviceChargeAmount;
     }
 
     public String getReceiverName() {
