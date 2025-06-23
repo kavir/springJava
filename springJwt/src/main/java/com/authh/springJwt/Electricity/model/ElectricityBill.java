@@ -2,7 +2,7 @@ package com.authh.springJwt.Electricity.model;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
+// import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

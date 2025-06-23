@@ -1,7 +1,7 @@
 package com.authh.springJwt.Electricity.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+// import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

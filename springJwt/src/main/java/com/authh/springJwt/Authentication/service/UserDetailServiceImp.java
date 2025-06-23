@@ -1,16 +1,15 @@
 package com.authh.springJwt.Authentication.service;
 
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.authh.springJwt.Authentication.model.CustomUserDetails;
-import com.authh.springJwt.Authentication.model.Role;
 import com.authh.springJwt.Authentication.model.User;
 import com.authh.springJwt.Authentication.repo.UserRepository;
 import com.authh.springJwt.Wallet.Response.UserUpdateRequest;
@@ -20,8 +19,8 @@ public class UserDetailServiceImp implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    // @Autowired
+    // private PasswordEncoder passwordEncoder;
     @Override
     public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
         User user = userRepository.findByNumber(phoneNumber)

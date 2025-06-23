@@ -6,12 +6,14 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
+import io.micrometer.common.lang.NonNull;
+
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
+    public void configureMessageBroker(@NonNull MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic"); // For broadcasting messages to clients
         config.setApplicationDestinationPrefixes("/app"); // For receiving messages from clients
     }

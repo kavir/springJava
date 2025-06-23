@@ -11,6 +11,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.authh.springJwt.Authentication.service.JwtService;
 import com.authh.springJwt.Authentication.service.UserDetailServiceImp;
 
+import io.micrometer.common.lang.NonNull;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -31,7 +32,7 @@ public class JwtAuthenticateFilter extends OncePerRequestFilter {
     private UserDetailServiceImp userDetailService;
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
 			throws ServletException, IOException {
                 String authHeader=request.getHeader("Authorization");
                 System.out.println("siuuu___Authorization Header: " + authHeader); 
