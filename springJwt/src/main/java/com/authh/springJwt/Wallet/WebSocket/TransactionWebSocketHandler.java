@@ -34,7 +34,7 @@ public class TransactionWebSocketHandler extends TextWebSocketHandler {
         sessions.remove(session);
         System.out.println("WebSocket session closed: " + session.getId());
     }
-
+//aahaha
     // Static method to send messages to all connected clients
     public static void sendTransactionUpdate(String message) {
         for (WebSocketSession session : sessions) {
