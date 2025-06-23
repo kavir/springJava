@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import com.authh.springJwt.Authentication.model.User;
 import com.authh.springJwt.Authentication.model.UserRegisterDTO;
 import com.authh.springJwt.Authentication.repo.UserRepository;
-// import com.authh.springJwt.AuthDTO.LoginRequestDTO;
-// import com.authh.springJwt.AuthDTO.RegisterRequestDTO;
 import com.authh.springJwt.Wallet.Model.Wallet;
 import com.authh.springJwt.Wallet.Repository.WalletRepository;
 

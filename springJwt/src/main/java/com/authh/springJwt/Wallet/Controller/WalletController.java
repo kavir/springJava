@@ -33,7 +33,9 @@ public class WalletController {
     public ResponseEntity<TransferResponse> fundTransfer(@RequestParam String senderNumber,
                                                          @RequestParam String receiverNumber,
                                                          @RequestParam Double amount,
-                                                         @RequestParam String mpin) throws IOException {
+                                                         @RequestParam String mpin,
+                                                         @RequestParam Boolean  isUseReward
+                                                         ) throws IOException {
         System.out.println("THE DATA ARE: " + senderNumber + " " + receiverNumber + " " + amount);
     
         if (senderNumber.equals(receiverNumber)) {
@@ -48,7 +50,7 @@ public class WalletController {
             return ResponseEntity.badRequest().body(selfTransferResponse);
         }
     
-        WalletTransferResult result = walletService.transferFunds(senderNumber, receiverNumber, amount, mpin);
+        WalletTransferResult result = walletService.transferFunds(senderNumber, receiverNumber, amount, mpin,isUseReward);
         String status = result.getStatus();
         double serviceChargeAmount = result.getServiceChargeAmount();
         double actualAmount = result.getAmount();

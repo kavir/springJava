@@ -5,11 +5,9 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-// import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,7 +42,7 @@ public class MeterController {
         return ResponseEntity.ok(meterService.getUserBills(userId));
     }
     @PostMapping("/pay/{billId}")
-    public ResponseEntity<?> payBill(@PathVariable Long billId,@RequestParam String number,@RequestParam String mpin) {
+    public ResponseEntity<?> payBill(@PathVariable Long billId,@RequestParam String number,@RequestParam String mpin,@RequestParam Boolean isUseReward) {
         System.out.println("Paying bill with ID: " + billId + ", number: " + number );
         if (billId == null) {
             return ResponseEntity.badRequest().body("Missing required path variable: billId");
@@ -71,7 +69,7 @@ public class MeterController {
             String receiverNumber = "9876543211";
             double amount = bill.getAmount();
 
-            WalletTransferResult result = walletService.transferFunds(senderNumber, receiverNumber, amount, mpin);
+            WalletTransferResult result = walletService.transferFunds(senderNumber, receiverNumber, amount, mpin, isUseReward);
             String transferStatus = result.getStatus();
             if (!transferStatus.equalsIgnoreCase("SUCCESS")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Payment failed: " + transferStatus);
