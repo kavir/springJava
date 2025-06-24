@@ -35,13 +35,13 @@ public class Transaction {
     private Double amount;
 
     private LocalDateTime timestamp = LocalDateTime.now();
-    
+
     private String status;
 
     @Column(length = 255)
     private String statement;
-    // public Transaction() {
-    // }
+    public Transaction() {
+    }
 
     public Transaction(User sender, User receiver, Double amount,String statement, String status) {
         this.sender = sender;
