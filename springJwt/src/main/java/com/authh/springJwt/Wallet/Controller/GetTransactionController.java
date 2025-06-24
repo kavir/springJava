@@ -128,8 +128,8 @@ public class GetTransactionController {
                         isSender ? senderName : receiverName,
                         isSender ? receiverName : senderName,
                         transaction.getAmount(),
-                        
                         transaction.getTimestamp(),
+                        transaction.getStatement(),
                         transaction.getStatus(),
                         isSender ? "Sent" : "Received",
                         isSender ? receiverPhone : senderPhone

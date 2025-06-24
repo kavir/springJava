@@ -17,6 +17,7 @@ public class TransactionDTO {
     // private Double serviceChargeAmount;
     // private Double discountAmount;
     private LocalDateTime timestamp; // Use LocalDateTime here
+    private String statement;
     private String status;
     private String transactionRole; // "Sent" or "Received"
     private String phoneNumber; // Add phone number field

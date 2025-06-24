@@ -38,15 +38,15 @@ public class Transaction {
     private String status;
 
     @Column(length = 255)
-    private String notes;
+    private String statement;
     public Transaction() {
     }
 
-    public Transaction(User sender, User receiver, Double amount,String notes, String status) {
+    public Transaction(User sender, User receiver, Double amount,String statement, String status) {
         this.sender = sender;
         this.receiver = receiver;
         this.amount = amount;
-        this.notes = notes;
+        this.statement = statement;
         // this.serviceChargeAmount = serviceChargeAmount; // Default service charge, can be set later
         this.status = status;
     }
