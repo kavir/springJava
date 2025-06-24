@@ -37,7 +37,7 @@ public class WalletController {
                                                          @RequestParam String mpin,
                                                          @RequestParam Boolean  isUseReward
                                                          ) throws IOException {
-        System.out.println("THE DATA ARE: " + senderNumber + " " + receiverNumber + " " + amount);
+        System.out.println("THE DATA ARE: " + senderNumber + " " + receiverNumber + " " + amount + " "+ isUseReward);
     
         if (senderNumber.equals(receiverNumber)) {
             TransferResponse selfTransferResponse = new TransferResponse(
