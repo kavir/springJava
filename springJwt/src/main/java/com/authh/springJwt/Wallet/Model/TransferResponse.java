@@ -7,16 +7,18 @@ public class TransferResponse {
     private String status;
     private String message;
     private double serviceChargeAmount;
+    private double discountAmount;
     private double amount;
     private String receiverName;
     private String receiverNumber;
 
     // Constructor
-    public TransferResponse(String status, String message, double amount,double serviceChargeAmount, String receiverName, String receiverNumber) {
+    public TransferResponse(String status, String message, double amount,double serviceChargeAmount,double discountAmount, String receiverName, String receiverNumber) {
         this.status = status;
         this.message = message;
         this.amount = amount;
         this.serviceChargeAmount = serviceChargeAmount;
+        this.discountAmount = discountAmount;
         this.receiverName = receiverName;
         this.receiverNumber = receiverNumber;
     }
@@ -51,6 +53,13 @@ public class TransferResponse {
 
     public void setserviceChargeAmount(Double serviceChargeAmount) {
         this.serviceChargeAmount = serviceChargeAmount;
+    }
+    public Double getdiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setdiscountAmount(Double discountAmount) {
+        this.discountAmount = discountAmount;
     }
 
     public String getReceiverName() {

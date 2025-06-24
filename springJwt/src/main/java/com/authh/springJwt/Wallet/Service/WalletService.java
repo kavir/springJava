@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.authh.springJwt.Authentication.model.User;
 import com.authh.springJwt.Authentication.repo.UserRepository;
-import com.authh.springJwt.Revenue.Repository.RevenueRepository;
 import com.authh.springJwt.Reward.Model.RewardModel;
 import com.authh.springJwt.Reward.Repository.RewardRepository;
 import com.authh.springJwt.Wallet.Model.Transaction;
@@ -30,8 +29,8 @@ public class WalletService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private RevenueRepository revenueRepository;
+    // @Autowired
+    // private RevenueRepository revenueRepository;
     @Autowired
     private RewardRepository rewardRepository;
 
@@ -41,92 +40,92 @@ public class WalletService {
     private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
    @Transactional
-public WalletTransferResult transferFunds(String senderNumber, String receiverNumber, Double amount, String mpin, Boolean isUseReward) throws IOException {
-    double minRewardPoints = 0.00;
-    double rewardToMoneyRatio = 100.0; // 100 points = Rs 1
-    double rewardDiscount = 0.0;
+    public WalletTransferResult transferFunds(String senderNumber, String receiverNumber, Double amount, String mpin, Boolean isUseReward) throws IOException {
+        double minRewardPoints = 0.00;
+        double rewardToMoneyRatio = 100.0; // 100 points = Rs 1
+        double discountAmount = 0.0;
 
-    User sender = userRepository.findByNumber(senderNumber)
-            .orElseThrow(() -> new RuntimeException("Sender not found"));
-    User receiver = userRepository.findByNumber(receiverNumber)
-            .orElseThrow(() -> new RuntimeException("Receiver not found"));
+        User sender = userRepository.findByNumber(senderNumber)
+                .orElseThrow(() -> new RuntimeException("Sender not found"));
+        User receiver = userRepository.findByNumber(receiverNumber)
+                .orElseThrow(() -> new RuntimeException("Receiver not found"));
 
-    Wallet senderWallet = sender.getWallet();
-    Wallet receiverWallet = receiver.getWallet();
+        Wallet senderWallet = sender.getWallet();
+        Wallet receiverWallet = receiver.getWallet();
 
-    if (!passwordEncoder.matches(mpin, senderWallet.getMpin())) {
-        return new WalletTransferResult("INVALID_MPIN", 0.0, amount);
-    }
-
-    // Define service charge and min reward based on amount
-    if (amount <= 100) {
-        serviceChargePercentage = 0.08;
-    } else if (amount <= 500) {
-        serviceChargePercentage = 0.09;
-    } else if (amount <= 1000) {
-        serviceChargePercentage = 0.10;
-        minRewardPoints = 200.0;
-    } else if (amount <= 5000) {
-        serviceChargePercentage = 0.20;
-        minRewardPoints = 500.0;
-    } else if (amount <= 10000) {
-        serviceChargePercentage = 0.20;
-        minRewardPoints = 600.0;
-    } else {
-        serviceChargePercentage = 0.10;
-        minRewardPoints = 500.0;
-    }
-
-    double serviceChargeAmount = (serviceChargePercentage * amount) / 100.0;
-    double totalDebit = amount + serviceChargeAmount;
-
-    // Fetch reward model
-    RewardModel reward = rewardRepository.findByUser(sender).orElse(null);
-    if (reward == null) {
-        reward = new RewardModel();
-        reward.setUser(sender);
-        reward.setRewardPoints(0.0);
-    }
-
-    // Apply reward discount if requested
-    if (Boolean.TRUE.equals(isUseReward)) {
-        if (reward.getRewardPoints() < minRewardPoints) {
-            throw new IllegalArgumentException("Reward Points not sufficient");
+        if (!passwordEncoder.matches(mpin, senderWallet.getMpin())) {
+            return new WalletTransferResult("INVALID_MPIN", 0.0,discountAmount, amount);
         }
-        reward.setRewardPoints(reward.getRewardPoints() - minRewardPoints);
-        rewardDiscount = minRewardPoints / rewardToMoneyRatio; // convert reward points to Rs
-        totalDebit -= rewardDiscount;
+
+        // Define service charge and min reward based on amount
+        if (amount <= 100) {
+            serviceChargePercentage = 0.08;
+        } else if (amount <= 500) {
+            serviceChargePercentage = 0.09;
+        } else if (amount <= 1000) {
+            serviceChargePercentage = 0.10;
+            minRewardPoints = 200.0;
+        } else if (amount <= 5000) {
+            serviceChargePercentage = 0.20;
+            minRewardPoints = 500.0;
+        } else if (amount <= 10000) {
+            serviceChargePercentage = 0.20;
+            minRewardPoints = 600.0;
+        } else {
+            serviceChargePercentage = 0.10;
+            minRewardPoints = 500.0;
+        }
+
+        double serviceChargeAmount = (serviceChargePercentage * amount) / 100.0;
+        double totalDebit = amount + serviceChargeAmount;
+
+        // Fetch reward model
+        RewardModel reward = rewardRepository.findByUser(sender).orElse(null);
+        if (reward == null) {
+            reward = new RewardModel();
+            reward.setUser(sender);
+            reward.setRewardPoints(0.0);
+        }
+
+        // Apply reward discount if requested
+        if (Boolean.TRUE.equals(isUseReward)) {
+            if (reward.getRewardPoints() < minRewardPoints) {
+                throw new IllegalArgumentException("Reward Points not sufficient");
+            }
+            reward.setRewardPoints(reward.getRewardPoints() - minRewardPoints);
+            discountAmount = minRewardPoints / rewardToMoneyRatio; // convert reward points to Rs
+            totalDebit -= discountAmount;
+        }
+
+        // Check balance again after applying reward discount
+        if (senderWallet.getBalance() < totalDebit) {
+            return new WalletTransferResult("INSUFFICIENT_BALANCE", serviceChargeAmount,discountAmount, amount);
+        }
+
+        // Process transaction
+        transactionService.processTransaction(senderNumber, receiverNumber, amount);
+
+        senderWallet.setBalance(senderWallet.getBalance() - totalDebit);
+        receiverWallet.setBalance(receiverWallet.getBalance() + amount);
+
+        walletRepository.save(senderWallet);
+        walletRepository.save(receiverWallet);
+
+        // Save transaction
+        Transaction transaction = new Transaction(sender, receiver, amount, "SUCCESS");
+        transactionRepository.save(transaction);
+
+        // Reward earn logic
+        double rewardPointsEarned = amount / 500.0;
+        reward.setRewardPoints(reward.getRewardPoints() + rewardPointsEarned);
+        rewardRepository.save(reward);
+
+        System.out.println("Transferred Amount: " + amount);
+        System.out.println("Service Charge: " + serviceChargeAmount);
+        System.out.println("Reward Discount Applied: " + discountAmount);
+
+        return new WalletTransferResult("SUCCESS", serviceChargeAmount,discountAmount, amount);
     }
-
-    // Check balance again after applying reward discount
-    if (senderWallet.getBalance() < totalDebit) {
-        return new WalletTransferResult("INSUFFICIENT_BALANCE", serviceChargeAmount, amount);
-    }
-
-    // Process transaction
-    transactionService.processTransaction(senderNumber, receiverNumber, amount);
-
-    senderWallet.setBalance(senderWallet.getBalance() - totalDebit);
-    receiverWallet.setBalance(receiverWallet.getBalance() + amount);
-
-    walletRepository.save(senderWallet);
-    walletRepository.save(receiverWallet);
-
-    // Save transaction
-    Transaction transaction = new Transaction(sender, receiver, amount, "SUCCESS");
-    transactionRepository.save(transaction);
-
-    // Reward earn logic
-    double rewardPointsEarned = amount / 500.0;
-    reward.setRewardPoints(reward.getRewardPoints() + rewardPointsEarned);
-    rewardRepository.save(reward);
-
-    System.out.println("Transferred Amount: " + amount);
-    System.out.println("Service Charge: " + serviceChargeAmount);
-    System.out.println("Reward Discount Applied: " + rewardDiscount);
-
-    return new WalletTransferResult("SUCCESS", serviceChargeAmount, amount);
-}
 
 
     

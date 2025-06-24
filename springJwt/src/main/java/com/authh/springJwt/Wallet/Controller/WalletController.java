@@ -1,6 +1,7 @@
 package com.authh.springJwt.Wallet.Controller;
 
 import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,7 @@ public class WalletController {
                     "failure",
                     "Sender and receiver cannot be the same.",
                     0.0,
+                    0.0,
                     amount,
                     receiverNumber,
                     receiverNumber
@@ -53,6 +55,7 @@ public class WalletController {
         WalletTransferResult result = walletService.transferFunds(senderNumber, receiverNumber, amount, mpin,isUseReward);
         String status = result.getStatus();
         double serviceChargeAmount = result.getServiceChargeAmount();
+        double discountAmount = result.getDiscountAmount();
         double actualAmount = result.getAmount();
         String receiverName = walletService.getReceiverName(receiverNumber);
         System.out.println("amount 2: " + actualAmount);
@@ -67,7 +70,9 @@ public class WalletController {
                     default -> "Transfer failed";
                 },
                 actualAmount,
+                discountAmount,
                 serviceChargeAmount,
+
                 receiverName,
                 receiverNumber
         );

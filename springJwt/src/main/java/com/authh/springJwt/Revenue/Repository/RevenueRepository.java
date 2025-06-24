@@ -8,4 +8,5 @@ import com.authh.springJwt.Revenue.Model.RevenueModel;
 @Repository
 public interface RevenueRepository extends JpaRepository <RevenueModel,Long> {
     
+    
 }

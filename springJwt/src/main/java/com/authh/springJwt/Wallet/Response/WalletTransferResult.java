@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 public class WalletTransferResult {
     private String status;
     private double serviceChargeAmount;
+    private double discountAmount;
     private double amount;
 }
