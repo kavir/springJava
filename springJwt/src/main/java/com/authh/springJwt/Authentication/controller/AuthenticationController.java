@@ -26,13 +26,10 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid UserRegisterDTO  request) {
         System.out.println("Registering user: " + request);
-        try {
+        
             AuthenticationResponse response = authenticationService.registerUser(request);
             return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            e.printStackTrace(); // Log to Railway deploy logs
-            return ResponseEntity.status(500).body("Registration failed: " + e.getMessage());
-        }
+       
     }
 
    
