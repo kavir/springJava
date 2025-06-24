@@ -35,24 +35,26 @@ public class WalletController {
                                                          @RequestParam String receiverNumber,
                                                          @RequestParam Double amount,
                                                          @RequestParam String mpin,
+                                                         @RequestParam String notes,
                                                          @RequestParam Boolean  isUseReward
                                                          ) throws IOException {
-        System.out.println("THE DATA ARE: " + senderNumber + " " + receiverNumber + " " + amount + " "+ isUseReward);
+        System.out.println("THE DATA ARE: " + senderNumber + " " + receiverNumber + " " + amount + " "+ notes + " "+ isUseReward);
     
         if (senderNumber.equals(receiverNumber)) {
             TransferResponse selfTransferResponse = new TransferResponse(
                     "failure",
                     "Sender and receiver cannot be the same.",
-                    0.0,
-                    0.0,
+                    "",
                     amount,
+                    0.0,
+                    0.0,
                     receiverNumber,
                     receiverNumber
             );
             return ResponseEntity.badRequest().body(selfTransferResponse);
         }
     
-        WalletTransferResult result = walletService.transferFunds(senderNumber, receiverNumber, amount, mpin,isUseReward);
+        WalletTransferResult result = walletService.transferFunds(senderNumber, receiverNumber, amount, mpin,notes,isUseReward);
         String status = result.getStatus();
         double serviceChargeAmount = result.getServiceChargeAmount();
         double discountAmount = result.getDiscountAmount();
@@ -69,10 +71,10 @@ public class WalletController {
                     case "SUCCESS" -> "Transfer completed successfully";
                     default -> "Transfer failed";
                 },
+                notes,
                 actualAmount,
-                discountAmount,
                 serviceChargeAmount,
-
+                discountAmount,
                 receiverName,
                 receiverNumber
         );
@@ -86,7 +88,7 @@ public class WalletController {
         };
     }
     
-
+//////////////////////////////////////////////////
    
 
     @GetMapping("/userWallet")

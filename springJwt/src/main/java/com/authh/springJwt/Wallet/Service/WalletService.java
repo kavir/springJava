@@ -40,7 +40,7 @@ public class WalletService {
     private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
    @Transactional
-    public WalletTransferResult transferFunds(String senderNumber, String receiverNumber, Double amount, String mpin, Boolean isUseReward) throws IOException {
+    public WalletTransferResult transferFunds(String senderNumber, String receiverNumber, Double amount, String mpin,String notes, Boolean isUseReward) throws IOException {
         double minRewardPoints = 0.00;
         double rewardToMoneyRatio = 100.0; // 100 points = Rs 1
         double discountAmount = 0.0;
@@ -112,7 +112,7 @@ public class WalletService {
         walletRepository.save(receiverWallet);
 
         // Save transaction
-        Transaction transaction = new Transaction(sender, receiver, amount, "SUCCESS");
+        Transaction transaction = new Transaction(sender, receiver, amount, "SUCCESS",notes);
         transactionRepository.save(transaction);
 
         // Reward earn logic

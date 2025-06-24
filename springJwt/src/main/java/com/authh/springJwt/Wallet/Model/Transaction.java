@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.authh.springJwt.Authentication.model.User;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,13 +37,16 @@ public class Transaction {
     private LocalDateTime timestamp = LocalDateTime.now();
     private String status;
 
+    @Column(length = 255)
+    private String notes;
     public Transaction() {
     }
 
-    public Transaction(User sender, User receiver, Double amount, String status) {
+    public Transaction(User sender, User receiver, Double amount,String notes, String status) {
         this.sender = sender;
         this.receiver = receiver;
         this.amount = amount;
+        this.notes = notes;
         // this.serviceChargeAmount = serviceChargeAmount; // Default service charge, can be set later
         this.status = status;
     }

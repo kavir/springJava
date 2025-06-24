@@ -6,16 +6,18 @@ import lombok.Data;
 public class TransferResponse {
     private String status;
     private String message;
+    private String notes;
+    private double amount;
     private double serviceChargeAmount;
     private double discountAmount;
-    private double amount;
     private String receiverName;
     private String receiverNumber;
 
     // Constructor
-    public TransferResponse(String status, String message, double amount,double serviceChargeAmount,double discountAmount, String receiverName, String receiverNumber) {
+    public TransferResponse(String status, String message,String notes, double amount,double serviceChargeAmount,double discountAmount, String receiverName, String receiverNumber) {
         this.status = status;
         this.message = message;
+        this.notes = notes;
         this.amount = amount;
         this.serviceChargeAmount = serviceChargeAmount;
         this.discountAmount = discountAmount;
@@ -38,6 +40,13 @@ public class TransferResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public Double getAmount() {

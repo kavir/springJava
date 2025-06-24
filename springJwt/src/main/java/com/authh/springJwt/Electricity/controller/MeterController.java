@@ -42,7 +42,7 @@ public class MeterController {
         return ResponseEntity.ok(meterService.getUserBills(userId));
     }
     @PostMapping("/pay/{billId}")
-    public ResponseEntity<?> payBill(@PathVariable Long billId,@RequestParam String number,@RequestParam String mpin,@RequestParam Boolean isUseReward) {
+    public ResponseEntity<?> payBill(@PathVariable Long billId,@RequestParam String number,@RequestParam String mpin,@RequestParam String notes,@RequestParam Boolean isUseReward) {
         System.out.println("Paying bill with ID: " + billId + ", number: " + number );
         if (billId == null) {
             return ResponseEntity.badRequest().body("Missing required path variable: billId");
@@ -69,7 +69,7 @@ public class MeterController {
             String receiverNumber = "9876543211";
             double amount = bill.getAmount();
 
-            WalletTransferResult result = walletService.transferFunds(senderNumber, receiverNumber, amount, mpin, isUseReward);
+            WalletTransferResult result = walletService.transferFunds(senderNumber, receiverNumber, amount, mpin,notes, isUseReward);
             String transferStatus = result.getStatus();
             if (!transferStatus.equalsIgnoreCase("SUCCESS")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Payment failed: " + transferStatus);

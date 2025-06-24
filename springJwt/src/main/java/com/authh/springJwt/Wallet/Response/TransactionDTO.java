@@ -14,6 +14,8 @@ public class TransactionDTO {
     private String senderName;
     private String receiverName;
     private Double amount;
+    // private Double serviceChargeAmount;
+    // private Double discountAmount;
     private LocalDateTime timestamp; // Use LocalDateTime here
     private String status;
     private String transactionRole; // "Sent" or "Received"
