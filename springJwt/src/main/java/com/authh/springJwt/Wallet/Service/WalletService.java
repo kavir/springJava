@@ -112,7 +112,7 @@ public class WalletService {
         walletRepository.save(receiverWallet);
 
         // Save transaction
-        Transaction transaction = new Transaction(sender, receiver, amount, "SUCCESS",statement);
+        Transaction transaction = new Transaction(sender, receiver, amount, statement,"SUCCESS");
         transactionRepository.save(transaction);
 
         // Reward earn logic
