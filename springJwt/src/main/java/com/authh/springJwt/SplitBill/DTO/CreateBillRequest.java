@@ -9,4 +9,4 @@ public class CreateBillRequest {
     private String title;
     private Double totalAmount;
     private List<ParticipantDTO> participants;
-}
+}////
