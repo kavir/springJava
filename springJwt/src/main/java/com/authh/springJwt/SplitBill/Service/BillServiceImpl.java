@@ -34,8 +34,8 @@ public class BillServiceImpl implements BillService {
     private final WalletService walletService;
 
     @Override
-    public BillResponse createBill(CreateBillRequest request, String creatorUsername) {
-        User creator = userRepo.findByUsername(creatorUsername)
+    public BillResponse createBill(CreateBillRequest request, Long creatorId) {
+        User creator = userRepo.findById(creatorId)
             .orElseThrow(() -> new RuntimeException("User not found"));
         System.out.println("split bills _____"+request.getTitle());
         System.out.println("split bills _____"+request.getTotalAmount());

@@ -28,10 +28,10 @@ public class BillController {
 
     @PostMapping
     public ResponseEntity<BillResponse> createBill(@RequestBody @Valid CreateBillRequest request,
-                                                   Principal principal) {
+                                                   @RequestParam Long Id) {
         System.out.println("details while creating is___"+request.getTitle());
         System.out.println("details while creating is___"+request.getTotalAmount());
-        return ResponseEntity.ok(billService.createBill(request, principal.getName()));
+        return ResponseEntity.ok(billService.createBill(request, Id));
     }
 
     @GetMapping
