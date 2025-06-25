@@ -35,7 +35,7 @@ public class Bill {
 
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy="bills",cascade=CascadeType.ALL )
+    @OneToMany(mappedBy="bill",cascade=CascadeType.ALL )
     private List<BillParticipant> participants;
 
     
