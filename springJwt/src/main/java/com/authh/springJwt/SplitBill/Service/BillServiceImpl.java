@@ -37,7 +37,9 @@ public class BillServiceImpl implements BillService {
     public BillResponse createBill(CreateBillRequest request, String creatorUsername) {
         User creator = userRepo.findByUsername(creatorUsername)
             .orElseThrow(() -> new RuntimeException("User not found"));
-
+            
+        System.out.println("split bills _____"+request.getTitle());
+        System.out.println("split bills _____"+request.getTotalAmount());
         Bill bill = new Bill();
         bill.setTitle(request.getTitle());
         bill.setTotalAmount(request.getTotalAmount());
@@ -66,6 +68,7 @@ public class BillServiceImpl implements BillService {
             .orElseThrow(() -> new RuntimeException("User not found"));
         List<BillParticipant> entries = participantRepo.findByUser_Id(user.getId());
         Set<Bill> bills = entries.stream().map(BillParticipant::getBill).collect(Collectors.toSet());
+        System.out.println("get my bills___"+bills);
         return bills.stream().map(this::convertToResponse).collect(Collectors.toList());
     }
 
