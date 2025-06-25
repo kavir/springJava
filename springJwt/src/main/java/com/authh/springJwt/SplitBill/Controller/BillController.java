@@ -29,6 +29,8 @@ public class BillController {
     @PostMapping
     public ResponseEntity<BillResponse> createBill(@RequestBody @Valid CreateBillRequest request,
                                                    Principal principal) {
+        System.out.println("details while creating is___"+request.getTitle());
+        System.out.println("details while creating is___"+request.getAmount());
         return ResponseEntity.ok(billService.createBill(request, principal.getName()));
     }
 
