@@ -3,6 +3,7 @@ package com.authh.springJwt.SplitBill.Controller;
 import java.security.Principal;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BillController {
 
+    @Autowired
     private final BillService billService;
 
     @PostMapping
@@ -35,8 +37,8 @@ public class BillController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BillResponse>> getMyBills(Principal principal) {
-        return ResponseEntity.ok(billService.getMyBills(principal.getName()));
+    public ResponseEntity<List<BillResponse>> getMyBills(@RequestParam Long Id) {
+        return ResponseEntity.ok(billService.getMyBills(Id));
     }
 
     @GetMapping("/{billId}")

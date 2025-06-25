@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.authh.springJwt.Authentication.model.User;
@@ -21,17 +22,19 @@ import com.authh.springJwt.SplitBill.Response.BillResponse;
 import com.authh.springJwt.SplitBill.Response.ParticipantStatus;
 import com.authh.springJwt.Wallet.Service.WalletService;
 
-import lombok.RequiredArgsConstructor;
-
 
 @Service
-@RequiredArgsConstructor
+// @RequiredArgsConstructor
 public class BillServiceImpl implements BillService {
 
-    private final BillRepository billRepo;
-    private final BillParticipantRepository participantRepo;
-    private final UserRepository userRepo;
-    private final WalletService walletService;
+    @Autowired
+    private  BillRepository billRepo;
+    @Autowired
+    private  BillParticipantRepository participantRepo;
+    @Autowired
+    private  UserRepository userRepo;
+    @Autowired
+    private  WalletService walletService;
 
     @Override
     public BillResponse createBill(CreateBillRequest request, Long creatorId) {
@@ -63,8 +66,8 @@ public class BillServiceImpl implements BillService {
     }//okay
 
     @Override
-    public List<BillResponse> getMyBills(String username) {
-        User user = userRepo.findByUsername(username)
+    public List<BillResponse> getMyBills(Long Id) {
+        User user = userRepo.findById(Id)
             .orElseThrow(() -> new RuntimeException("User not found"));
         List<BillParticipant> entries = participantRepo.findByUser_Id(user.getId());
         Set<Bill> bills = entries.stream().map(BillParticipant::getBill).collect(Collectors.toSet());
