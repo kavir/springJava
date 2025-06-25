@@ -60,7 +60,7 @@ public class BillServiceImpl implements BillService {
         bill.setParticipants(participants);
         Bill savedBill = billRepo.save(bill);
         return convertToResponse(savedBill);
-    }
+    }//okay
 
     @Override
     public List<BillResponse> getMyBills(String username) {
