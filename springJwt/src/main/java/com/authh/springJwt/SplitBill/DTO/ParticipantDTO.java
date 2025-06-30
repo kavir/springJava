@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ParticipantDTO {
-    private Long userId;
+    private String phoneNumber;
     private Double amountOwed;
 }

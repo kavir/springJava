@@ -36,6 +36,9 @@ public class BillServiceImpl implements BillService {
     @Autowired
     private  WalletService walletService;
 
+    //////////////////////////////////////////////////////////////////////////////////
+    /// Creating bill split
+
     @Override
     public BillResponse createBill(CreateBillRequest request, Long creatorId) {
         User creator = userRepo.findById(creatorId)
@@ -47,11 +50,10 @@ public class BillServiceImpl implements BillService {
         bill.setTotalAmount(request.getTotalAmount());
         bill.setCreatedBy(creator);
         bill.setCreatedAt(LocalDateTime.now());
-        
 
         List<BillParticipant> participants = new ArrayList<>();
         for (ParticipantDTO dto : request.getParticipants()) {
-            User participant = userRepo.findById(dto.getUserId())
+            User participant = userRepo.findByNumber(dto.getPhoneNumber())
                 .orElseThrow(() -> new RuntimeException("Participant not found"));
             BillParticipant bp = new BillParticipant();
             bp.setBill(bill);
@@ -65,6 +67,8 @@ public class BillServiceImpl implements BillService {
         return convertToResponse(savedBill);
     }//okay
 
+    //////////////////////////////////////////////////////////////////////////////////
+    /// fetch splitted bills
     @Override
     public List<BillResponse> getMyBills(Long Id) {
         User user = userRepo.findById(Id)
@@ -74,6 +78,8 @@ public class BillServiceImpl implements BillService {
         System.out.println("get my bills___"+bills);
         return bills.stream().map(this::convertToResponse).collect(Collectors.toList());
     }
+    //////////////////////////////////////////////////////////////////////////////////
+    /// fetch splitted bills details
 
     @Override
     public BillResponse getBillDetails(Long billId) {
@@ -81,6 +87,8 @@ public class BillServiceImpl implements BillService {
             .orElseThrow(() -> new RuntimeException("Bill not found"));
         return convertToResponse(bill);
     }
+    //////////////////////////////////////////////////////////////////////////////////
+    /// pay the splitted bills
 
     @Override
     public String settleBill(Long billId, String username,String mpin,String note,Boolean isUseReward) {
@@ -113,6 +121,7 @@ public class BillServiceImpl implements BillService {
         participantRepo.save(bp);
         return "Payment successful.";
     }
+    //////////////////////////////////////////////////////////////////////////////////
 
     private BillResponse convertToResponse(Bill bill) {
         
@@ -144,4 +153,5 @@ public class BillServiceImpl implements BillService {
         return response;
 
     }
+    //////////////////////////////////////////////////////////////////////////////////
 }
