@@ -53,8 +53,12 @@ public class BillServiceImpl implements BillService {
 
         List<BillParticipant> participants = new ArrayList<>();
         for (ParticipantDTO dto : request.getParticipants()) {
+        System.out.println("split bills _____"+dto.getPhoneNumber()); 
+
             User participant = userRepo.findByNumber(dto.getPhoneNumber())
                 .orElseThrow(() -> new RuntimeException("Participant not found"));
+        System.out.println("participant is _____"+participant.getFirstname()); 
+                
             BillParticipant bp = new BillParticipant();
             bp.setBill(bill);
             bp.setUser(participant);
