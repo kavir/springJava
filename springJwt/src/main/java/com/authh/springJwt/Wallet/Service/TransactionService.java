@@ -1,8 +1,10 @@
 package com.authh.springJwt.Wallet.Service;
 
-import org.springframework.stereotype.Service;
-import com.authh.springJwt.Wallet.WebSocket.TransactionWebSocketHandler;
 import java.io.IOException;
+
+import org.springframework.stereotype.Service;
+
+import com.authh.springJwt.WebSocket.Config.TransactionWebSocketHandler;
 
 @Service
 public class TransactionService {

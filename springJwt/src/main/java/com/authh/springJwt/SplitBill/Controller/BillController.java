@@ -47,9 +47,9 @@ public class BillController {
     }
 
     @PostMapping("/{billId}/settle")
-    public ResponseEntity<String> settleBill(@PathVariable Long billId, Principal principal,@RequestParam String mpin,
+    public ResponseEntity<String> settleBill(@PathVariable Long billId, @RequestParam Long userId,@RequestParam String mpin,
                                                          @RequestParam String note,
                                                          @RequestParam Boolean  isUseReward) {
-        return ResponseEntity.ok(billService.settleBill(billId, principal.getName(),mpin,note,isUseReward));
+        return ResponseEntity.ok(billService.settleBill(billId,userId,mpin,note,isUseReward));
     }
 }

@@ -1,17 +1,16 @@
-package com.authh.springJwt.Wallet.WebSocket;
+package com.authh.springJwt.WebSocket.Config;
 
 // TransactionWebSocketHandler.java
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import io.micrometer.common.lang.NonNull;
-
-import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.TextMessage;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TransactionWebSocketHandler extends TextWebSocketHandler {
     

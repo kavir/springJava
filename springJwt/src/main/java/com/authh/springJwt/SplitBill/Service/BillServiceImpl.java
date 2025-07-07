@@ -21,6 +21,7 @@ import com.authh.springJwt.SplitBill.Repository.BillRepository;
 import com.authh.springJwt.SplitBill.Response.BillResponse;
 import com.authh.springJwt.SplitBill.Response.ParticipantStatus;
 import com.authh.springJwt.Wallet.Service.WalletService;
+import com.authh.springJwt.WebSocket.Service.NotificationService;
 
 
 @Service
@@ -35,6 +36,9 @@ public class BillServiceImpl implements BillService {
     private  UserRepository userRepo;
     @Autowired
     private  WalletService walletService;
+    @Autowired
+    private NotificationService notificationService;
+
 
     //////////////////////////////////////////////////////////////////////////////////
     /// Creating bill split
@@ -69,6 +73,12 @@ public class BillServiceImpl implements BillService {
 
         bill.setParticipants(participants);
         Bill savedBill = billRepo.save(bill);
+        notificationService.sendBillUpdate(
+            "group-" + savedBill.getId(), 
+            "A new bill titled '" + savedBill.getTitle() + "' was added.",
+            creator.getFirstname(),
+            "BILL_ADDED"
+        );
         return convertToResponse(savedBill);
     }//okay
 
@@ -96,11 +106,11 @@ public class BillServiceImpl implements BillService {
     /// pay the splitted bills
 
     @Override
-    public String settleBill(Long billId, String username,String mpin,String note,Boolean isUseReward) {
-        User payer = userRepo.findByUsername(username)
+    public String settleBill(Long billId, Long userId,String mpin,String note,Boolean isUseReward) {
+        User payer = userRepo.findById(userId)
             .orElseThrow(() -> new RuntimeException("User not found"));
 
-        BillParticipant bp = participantRepo.findByBill_IdAndUser_Id(billId, payer.getId())
+        BillParticipant bp = participantRepo.findByBill_IdAndUser_Id(billId, userId)
             .orElseThrow(() -> new RuntimeException("No bill found for user"));
 
         if (bp.getHasPaid()) {
@@ -124,6 +134,12 @@ public class BillServiceImpl implements BillService {
         bp.setHasPaid(true);
         bp.setPaidAt(LocalDateTime.now());
         participantRepo.save(bp);
+        notificationService.sendBillUpdate(
+            "group-" + billId,
+            payer.getFirstname() + " has settled their part of the bill.",
+            payer.getFirstname(),
+            "BILL_PAID"
+        );
         return "Payment successful.";
     }
     //////////////////////////////////////////////////////////////////////////////////
