@@ -95,7 +95,7 @@ public class BillServiceImpl implements BillService {
     }
     //////////////////////////////////////////////////////////////////////////////////
     /// fetch splitted bills details
-
+////okay
     @Override
     public BillResponse getBillDetails(Long billId) {
         Bill bill = billRepo.findById(billId)
