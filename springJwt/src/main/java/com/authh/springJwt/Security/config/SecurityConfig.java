@@ -44,6 +44,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/employees/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/api/wallet/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/api/bills/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/api/splitBills/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/api/transactions/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/api/qr/generate**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/ws/transactions**").hasAnyRole("USER", "ADMIN")

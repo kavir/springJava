@@ -18,7 +18,7 @@ import com.authh.springJwt.SplitBill.Service.BillService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
+/////okay
 @RestController
 @RequestMapping("/api/splitBills")
 @RequiredArgsConstructor
