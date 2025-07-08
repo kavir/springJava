@@ -1,6 +1,5 @@
 package com.authh.springJwt.SplitBill.Controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/bills")
+@RequestMapping("/api/splitBills")
 @RequiredArgsConstructor
 public class BillController {
 
