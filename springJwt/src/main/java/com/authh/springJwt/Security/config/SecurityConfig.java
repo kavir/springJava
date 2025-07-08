@@ -58,24 +58,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    // public CorsConfigurationSource corsConfigurationSource() {
-    //     CorsConfiguration config = new CorsConfiguration();
-
-    //     // Use specific origins only if allowCredentials is true
-    //     config.setAllowedOrigins(List.of(
-    //         "https://emichaa.netlify.app",
-    //         "http://localhost:3000" // (optional) add dev frontend too
-    //     ));
-
-    //     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    //     config.setAllowedHeaders(List.of("*"));
-    //     config.setAllowCredentials(true); // for cookies/auth headers
-
-    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    //     source.registerCorsConfiguration("/**", config);
-    //     return source;
-    // }
-
+   
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOriginPatterns(List.of("*")); // for dynamic frontend domains
@@ -98,4 +81,4 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 }
-// inconsisitent server deploying
+// inconsisitent server deploying okay
