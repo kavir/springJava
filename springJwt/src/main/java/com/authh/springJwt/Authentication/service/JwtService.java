@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.function.Function;
 
 import javax.crypto.SecretKey;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -32,10 +33,7 @@ public class JwtService {
     }
     
 
-    // public boolean isValid(String token,UserDetails user){
-    //     final String number=extractPhoneNumber(token);
-    //     return (number.equals(user.getNumber()) && !isTokenExpired(token));
-    // }
+   
         
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date(System.currentTimeMillis()));
