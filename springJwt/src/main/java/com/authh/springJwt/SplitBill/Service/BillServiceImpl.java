@@ -14,6 +14,7 @@ import com.authh.springJwt.Authentication.model.User;
 import com.authh.springJwt.Authentication.repo.UserRepository;
 import com.authh.springJwt.SplitBill.DTO.CreateBillRequest;
 import com.authh.springJwt.SplitBill.DTO.ParticipantDTO;
+import com.authh.springJwt.SplitBill.Mapper.SplitBillMapper;
 import com.authh.springJwt.SplitBill.Model.Bill;
 import com.authh.springJwt.SplitBill.Model.BillParticipant;
 import com.authh.springJwt.SplitBill.Repository.BillParticipantRepository;
@@ -38,6 +39,8 @@ public class BillServiceImpl implements BillService {
     private  WalletService walletService;
     @Autowired
     private NotificationService notificationService;
+    // @Autowired
+    // private SplitBillMapper splitbillMapper;
 
 
     //////////////////////////////////////////////////////////////////////////////////
@@ -65,6 +68,7 @@ public class BillServiceImpl implements BillService {
         System.out.println("participant is _____"+participant.getFirstname()); 
                 
             BillParticipant bp = new BillParticipant();
+            // BillParticipant bp = splitBillMapper.toBillParticipant(dto);
             bp.setBill(bill);
             bp.setUser(participant);
             bp.setAmountOwed(dto.getAmountOwed());
