@@ -12,4 +12,8 @@ import com.authh.springJwt.SplitBill.Model.BillParticipant;
 public interface BillParticipantRepository extends JpaRepository<BillParticipant, Long> {
     List<BillParticipant> findByUser_Id(Long userId);
     Optional<BillParticipant> findByBill_IdAndUser_Id(Long billId, Long userId);
+    
 }
+
+
+//splitbill ko changes done 
