@@ -14,7 +14,6 @@ import com.authh.springJwt.Authentication.model.User;
 import com.authh.springJwt.Authentication.repo.UserRepository;
 import com.authh.springJwt.SplitBill.DTO.CreateBillRequest;
 import com.authh.springJwt.SplitBill.DTO.ParticipantDTO;
-import com.authh.springJwt.SplitBill.Mapper.SplitBillMapper;
 import com.authh.springJwt.SplitBill.Model.Bill;
 import com.authh.springJwt.SplitBill.Model.BillParticipant;
 import com.authh.springJwt.SplitBill.Repository.BillParticipantRepository;

@@ -2,6 +2,9 @@ package com.authh.springJwt.Authentication.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.authh.springJwt.Authentication.model.User;
 import com.authh.springJwt.Authentication.model.UserRegisterDTO;
@@ -9,12 +12,6 @@ import com.authh.springJwt.Authentication.service.AuthenticationResponse;
 import com.authh.springJwt.Authentication.service.AuthenticationService;
 
 import jakarta.validation.Valid;
-
-// import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 
 
