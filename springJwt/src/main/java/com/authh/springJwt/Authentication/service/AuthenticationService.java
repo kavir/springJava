@@ -1,5 +1,6 @@
 package com.authh.springJwt.Authentication.service;
 
+import com.authh.springJwt.Authentication.model.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -68,7 +69,7 @@ public class AuthenticationService {
     }
     
     
-    public AuthenticationResponse authenticate(User request){
+    public AuthenticationResponse authenticate(UserLoginDTO request){
         try{
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNumber(),request.getPassword()));}
         catch (Exception e) {

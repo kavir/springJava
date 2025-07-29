@@ -39,7 +39,15 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ✅ Enable CORS for secured routes
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(req ->
-                        req.requestMatchers("/login/**", "/register/**").permitAll()
+                        req.requestMatchers("/login/**",
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html",
+                                        "/swagger-resources/**",
+                                        "/configuration/ui",
+                                        "/configuration/security",
+                                        "/webjars/**",
+                                        "/register/**").permitAll()
                                 .requestMatchers("/api/employees/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/api/wallet/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/api/bills/**").hasAnyRole("USER", "ADMIN")
