@@ -36,19 +36,7 @@ public class BaseController {
      * @param data
      * @return
      */
-//    protected GlobalApiResponse successResponse(String message, Object data) {
-//        globalApiResponse.setStatus(API_SUCCESS_STATUS);
-//        globalApiResponse.setMessage(message);
-//        globalApiResponse.setData(data);
-//        return globalApiResponse;
-//    }
-//
-//    protected GlobalApiResponse successResponse(String message) {
-//        globalApiResponse.setStatus(API_SUCCESS_STATUS);
-//        globalApiResponse.setMessage(message);
-//        globalApiResponse.setData(null);
-//        return globalApiResponse;
-//    }
+
     protected GlobalApiResponse successResponse(String message, Object data) {
         return GlobalApiResponse.builder()
                 .status(API_SUCCESS_STATUS)
