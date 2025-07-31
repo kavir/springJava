@@ -30,26 +30,26 @@ public class BillController {
 
     @PostMapping
     public ResponseEntity<BillResponse> createBill(@RequestBody @Valid CreateBillRequest request,
-                                                   @RequestParam Long Id) {
+                                                   @RequestParam(value="creatorId") Long Id) {
         System.out.println("details while creating is___"+request.getTitle());
         System.out.println("details while creating is___"+request.getTotalAmount());
         return ResponseEntity.ok(billService.createBill(request, Id));
     }
 
     @GetMapping
-    public ResponseEntity<List<BillResponse>> getMyBills(@RequestParam Long Id) {
+    public ResponseEntity<List<BillResponse>> getMyBills(@RequestParam(value="userId")  Long Id) {
         return ResponseEntity.ok(billService.getMyBills(Id));
     }
 
     @GetMapping("/{billId}")
-    public ResponseEntity<BillResponse> getBillDetails(@PathVariable Long billId) {
+    public ResponseEntity<BillResponse> getBillDetails(@PathVariable(value="billId")  Long billId) {
         return ResponseEntity.ok(billService.getBillDetails(billId));
     }
 
     @PostMapping("/{billId}/settle")
-    public ResponseEntity<String> settleBill(@PathVariable Long billId, @RequestParam Long userId,@RequestParam String mpin,
-                                                         @RequestParam String note,
-                                                         @RequestParam Boolean  isUseReward) {
+    public ResponseEntity<String> settleBill(@PathVariable Long billId, @RequestParam(value="userId") Long userId,@RequestParam(value="mpin") String mpin,
+                                                         @RequestParam(value="notes",required = false) String note,
+                                                         @RequestParam(value="isUseReward",required = false) Boolean  isUseReward) {
         return ResponseEntity.ok(billService.settleBill(billId,userId,mpin,note,isUseReward));
     }
 }

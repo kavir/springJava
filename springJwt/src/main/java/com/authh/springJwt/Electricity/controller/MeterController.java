@@ -38,7 +38,7 @@ public class MeterController {
     }
 
     @GetMapping("/bills/{userId}")
-    public ResponseEntity<?> getUserBills(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserBills(@PathVariable(value = "userId") Long userId) {
         return ResponseEntity.ok(meterService.getUserBills(userId));
     }
     @PostMapping("/pay/{billId}")

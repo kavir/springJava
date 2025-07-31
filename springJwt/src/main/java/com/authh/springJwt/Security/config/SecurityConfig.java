@@ -37,8 +37,7 @@ public class SecurityConfig {
         System.out.println("siuuu___SecurityFilterChain initialized!");
         return http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ✅ Enable CORS for secured routes
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeRequests(req ->
+                .csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(req ->
                         req.requestMatchers("/login/**",
                                         "/v3/api-docs/**",
                                         "/swagger-ui/**",

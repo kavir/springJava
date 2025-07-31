@@ -24,15 +24,15 @@ import static com.authh.springJwt.Utils.SuccessResponseConstant.*;
 
 
 @RestController
-public class AuthenticationController extends BaseController {
+public class AuthenticationController  {
 
     @Autowired
     private AuthenticationService authenticationService;
 
-    @Operation(
-            summary = "Gets a list of districts",
-            description = "This API allows users to get a list of districts based on the specified province ID and optional search keyword. It returns the districts in the preferred language for authorized users"
-    )
+//    @Operation(
+//            summary = "Gets a list of districts",
+//            description = "This API allows users to get a list of districts based on the specified province ID and optional search keyword. It returns the districts in the preferred language for authorized users"
+//    )
 
     @PostMapping("/register")
     public ResponseEntity<?> register(

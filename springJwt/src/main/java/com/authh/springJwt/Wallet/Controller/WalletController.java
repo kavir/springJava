@@ -31,12 +31,12 @@ public class WalletController {
     @Autowired
     private UserDetailServiceImp userDetailServiceImp;
     @PostMapping("/transfer")
-    public ResponseEntity<TransferResponse> fundTransfer(@RequestParam String senderNumber,
-                                                         @RequestParam String receiverNumber,
-                                                         @RequestParam Double amount,
-                                                         @RequestParam String mpin,
-                                                         @RequestParam String notes,
-                                                         @RequestParam Boolean  isUseReward
+    public ResponseEntity<TransferResponse> fundTransfer(@RequestParam(value = "senderNumber") String senderNumber,
+                                                         @RequestParam(value = "receiverNumber") String receiverNumber,
+                                                         @RequestParam(value = "amount") Double amount,
+                                                         @RequestParam(value = "mpin") String mpin,
+                                                         @RequestParam(value = "notes", required = false) String notes,
+                                                         @RequestParam(value = "isUseReward", required = false) Boolean  isUseReward
                                                          ) throws IOException {
         System.out.println("THE DATA ARE: " + senderNumber + " " + receiverNumber + " " + amount + " "+ notes + " "+ isUseReward);
     
@@ -92,7 +92,7 @@ public class WalletController {
    
 
     @GetMapping("/userWallet")
-    public ResponseEntity<UserWalletResponse> getUserWallet(@RequestParam String number) {
+    public ResponseEntity<UserWalletResponse> getUserWallet(@RequestParam(value = "number") String number) {
         Wallet wallet = walletService.getWalletByUserNumber(number);
         
         if (wallet == null) {
