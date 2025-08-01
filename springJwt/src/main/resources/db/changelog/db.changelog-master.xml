@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+       http://www.liquibase.org/xml/ns/dbchangelog
+       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- Reference to individual changelog files -->
+    <include file="/db/changelog/initial/changeset-admin.xml"/>
+    <include file="db/changelog/initial/changeset-authentication.xml"/>
+    <include file="db/changelog/initial/changeset-Bill.xml"/>
+    <include file="db/changelog/initial/changeset-billParticipant.xml"/>
+    <include file="db/changelog/initial/changeset-electricBill.xml"/>
+    <include file="db/changelog/initial/changeset-meterReading.xml"/>
+    <include file="db/changelog/initial/changeset-reward.xml"/>
+    <include file="db/changelog/initial/changeset-transaction.xml"/>
+    <include file="db/changelog/initial/changeset-wallet.xml"/>
+
+
+</databaseChangeLog>

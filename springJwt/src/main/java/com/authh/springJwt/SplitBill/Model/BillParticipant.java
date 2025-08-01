@@ -4,13 +4,7 @@ import java.time.LocalDateTime;
 
 import com.authh.springJwt.Authentication.model.User;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -30,9 +24,9 @@ public class BillParticipant {
     private User user;
 
     private Double amountOwed;
-
+    @Column(name="has_paid")
     private Boolean hasPaid = false;
-    
+
+    @Column(name="paid_at")
     private LocalDateTime paidAt;
 }
-//change gareko xainaw maile

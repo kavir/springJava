@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="2-create-meter-reading-table" author="kabir">
+        <createTable tableName="electricity_meter_reading">
+            <column name="meter_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reading_date" type="DATE"/>
+            <column name="current_reading" type="DOUBLE"/>
+            <column name="previous_reading" type="DOUBLE"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

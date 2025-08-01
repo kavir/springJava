@@ -25,7 +25,7 @@ public class GetTransactionController {
     @Autowired
     private TransactionRepository transactionRepository;
     @GetMapping("/{userId}")
-    public ResponseEntity<List<TransactionDTO>> getTransactionHistory(
+    public ResponseEntity<?> getTransactionHistory(
             @PathVariable Long userId,
             @RequestParam(required = false, defaultValue = "7D") String duration,
             @RequestParam(required = false) String startDate,  

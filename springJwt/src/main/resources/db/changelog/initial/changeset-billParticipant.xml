@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+       http://www.liquibase.org/xml/ns/dbchangelog
+       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="5-create-bill_participants-table" author="kabir">
+        <createTable tableName="bill_participants">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="bill_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_billparticipant_bill" referencedTableName="bill" referencedColumnNames="id"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_billparticipant_user" referencedTableName="authenticusers" referencedColumnNames="id"/>
+            </column>
+            <column name="amount_owed" type="DOUBLE"/>
+            <column name="has_paid" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="paid_at" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="9-rename-amountowed-column" author="kabir">
+        <renameColumn
+                tableName="bill_participants"
+                oldColumnName="amount_owed"
+                newColumnName="amountOwed"
+                columnDataType="DOUBLE"/>
+    </changeSet>
+
+</databaseChangeLog>

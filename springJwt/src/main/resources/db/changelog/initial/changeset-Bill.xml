@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+       http://www.liquibase.org/xml/ns/dbchangelog
+       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="4-create-bill-table" author="kabir">
+        <createTable tableName="bill">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="total_amount" type="DOUBLE"/>
+            <column name="created_by" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="fk_bill_createdby_user" referencedTableName="authenticusers" referencedColumnNames="id"/>
+            </column>
+            <column name="created_at" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="9-rename-totalAmount-column1" author="kabir">
+        <renameColumn
+                tableName="bill"
+                oldColumnName="total_amount"
+                newColumnName="totalAmount"
+                columnDataType="DOUBLE"/>
+    </changeSet>
+
+    <changeSet id="9-rename-createdBy-column3" author="kabir">
+        <renameColumn
+                tableName="bill"
+                oldColumnName="createdBy"
+                newColumnName="createdByy"
+                columnDataType="BIGINT"/>
+    </changeSet>
+    <changeSet id="9-rename-createdAt-column3" author="kabir">
+        <renameColumn
+                tableName="bill"
+                oldColumnName="createdAt"
+                newColumnName="created_at"
+                columnDataType="BIGINT"/>
+    </changeSet>
+    <changeSet id="10-change-created_at-type" author="kabir">
+        <modifyDataType
+                tableName="bill"
+                columnName="created_at"
+                newDataType="DATETIME"/>
+    </changeSet>
+
+
+</databaseChangeLog>

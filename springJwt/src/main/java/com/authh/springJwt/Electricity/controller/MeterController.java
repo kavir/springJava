@@ -1,7 +1,10 @@
 package com.authh.springJwt.Electricity.controller;
 
 import java.io.IOException;
+import java.util.List;
 
+import com.authh.springJwt.Authentication.service.AuthenticationResponse;
+import com.authh.springJwt.Utils.ResponseClass.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +42,9 @@ public class MeterController {
 
     @GetMapping("/bills/{userId}")
     public ResponseEntity<?> getUserBills(@PathVariable(value = "userId") Long userId) {
-        return ResponseEntity.ok(meterService.getUserBills(userId));
+        List<ElectricityBill> response = meterService.getUserBills(userId);
+        ApiResponse<?> apiResponse = new ApiResponse<>(200, "Electricity Bill Fetched successfully", response);
+        return ResponseEntity.ok(apiResponse);
     }
     @PostMapping("/pay/{billId}")
     public ResponseEntity<?> payBill(@PathVariable Long billId,@RequestParam String number,@RequestParam String mpin,@RequestParam String notes,@RequestParam Boolean isUseReward) {
@@ -74,8 +79,9 @@ public class MeterController {
             if (!transferStatus.equalsIgnoreCase("SUCCESS")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Payment failed: " + transferStatus);
             }
+            ApiResponse<?> apiResponse = new ApiResponse<>(200, "Electricity Bill Paid successfully", meterService.payBill(billId));
+            return ResponseEntity.ok(apiResponse);
 
-            return ResponseEntity.ok(meterService.payBill(billId));
 
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during payment: " + e.getMessage());

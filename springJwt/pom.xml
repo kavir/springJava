@@ -105,10 +105,10 @@
             <version>0.12.6</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- <dependency>
+         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-        </dependency> -->
+        </dependency>
 
         <dependency>
             <groupId>com.google.zxing</groupId>
@@ -125,11 +125,28 @@
 
     <build>
         <plugins>
+            <!-- Spring Boot plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <!-- Liquibase Maven plugin -->
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>4.23.0</version>
+                <configuration>
+                    <changeLogFile>src/main/resources/db/changelog/db.changelog-master.yaml</changeLogFile>
+                    <url>jdbc:mysql://127.0.0.1:3306/studentdb</url>
+                    <username>root</username>
+                    <password>Av3ng3d7xSQL</password>
+                    <driver>com.mysql.cj.jdbc.Driver</driver>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+
 
 </project>

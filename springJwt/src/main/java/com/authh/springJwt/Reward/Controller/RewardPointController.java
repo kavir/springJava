@@ -1,6 +1,8 @@
 package com.authh.springJwt.Reward.Controller;
 
+import com.authh.springJwt.Utils.ResponseClass.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,9 +19,10 @@ public class RewardPointController {
     private RewardService rewardService;
 
     @GetMapping("/getRewardPoints/{userId}")
-    public String getRewardPoints(@PathVariable(value = "userId") String userId) {
+    public ResponseEntity<?> getRewardPoints(@PathVariable(value = "userId") String userId) {
         System.out.println("Fetching reward points for user ID: " + userId);
-        return rewardService.fetchRewardPoints(Long.parseLong(userId));
+        ApiResponse<?> apiResponse = new ApiResponse<>(200, "Reward Points Fetched successfully", rewardService.fetchRewardPoints(Long.parseLong(userId)));
+        return ResponseEntity.ok(apiResponse);
     }
     
     

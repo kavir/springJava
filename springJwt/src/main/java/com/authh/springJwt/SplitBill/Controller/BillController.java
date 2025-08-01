@@ -2,6 +2,7 @@ package com.authh.springJwt.SplitBill.Controller;
 
 import java.util.List;
 
+import com.authh.springJwt.Utils.ResponseClass.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,27 +30,31 @@ public class BillController {
     private final BillService billService;
 
     @PostMapping
-    public ResponseEntity<BillResponse> createBill(@RequestBody @Valid CreateBillRequest request,
+    public ResponseEntity<?> createBill(@RequestBody @Valid CreateBillRequest request,
                                                    @RequestParam(value="creatorId") Long Id) {
         System.out.println("details while creating is___"+request.getTitle());
         System.out.println("details while creating is___"+request.getTotalAmount());
-        return ResponseEntity.ok(billService.createBill(request, Id));
+        ApiResponse<?> apiResponse = new ApiResponse<>(200, "Electricity Bill Fetched successfully", billService.createBill(request, Id));
+        return ResponseEntity.ok(apiResponse);
     }
 
     @GetMapping
-    public ResponseEntity<List<BillResponse>> getMyBills(@RequestParam(value="userId")  Long Id) {
-        return ResponseEntity.ok(billService.getMyBills(Id));
+    public ResponseEntity<?> getMyBills(@RequestParam(value="userId")  Long Id) {
+        ApiResponse<?> apiResponse = new ApiResponse<>(200, "Electricity Bill Fetched successfully", billService.getMyBills(Id));
+        return ResponseEntity.ok(apiResponse);
     }
 
     @GetMapping("/{billId}")
-    public ResponseEntity<BillResponse> getBillDetails(@PathVariable(value="billId")  Long billId) {
-        return ResponseEntity.ok(billService.getBillDetails(billId));
+    public ResponseEntity<?> getBillDetails(@PathVariable(value="billId")  Long billId) {
+        ApiResponse<?> apiResponse = new ApiResponse<>(200, "Electricity Bill Fetched successfully", billService.getBillDetails(billId));
+        return ResponseEntity.ok(apiResponse);
     }
 
     @PostMapping("/{billId}/settle")
-    public ResponseEntity<String> settleBill(@PathVariable Long billId, @RequestParam(value="userId") Long userId,@RequestParam(value="mpin") String mpin,
+    public ResponseEntity<?> settleBill(@PathVariable Long billId, @RequestParam(value="userId") Long userId,@RequestParam(value="mpin") String mpin,
                                                          @RequestParam(value="notes",required = false) String note,
                                                          @RequestParam(value="isUseReward",required = false) Boolean  isUseReward) {
-        return ResponseEntity.ok(billService.settleBill(billId,userId,mpin,note,isUseReward));
+        ApiResponse<?> apiResponse = new ApiResponse<>(200, "Electricity Bill Fetched successfully", billService.settleBill(billId,userId,mpin,note,isUseReward));
+        return ResponseEntity.ok(apiResponse);
     }
 }

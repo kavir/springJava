@@ -2,6 +2,7 @@ package com.authh.springJwt.Authentication.controller;
 
 import com.authh.springJwt.Authentication.model.UserLoginDTO;
 import com.authh.springJwt.Utils.BaseController;
+import com.authh.springJwt.Utils.ResponseClass.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -39,27 +40,22 @@ public class AuthenticationController  {
             @RequestBody @Valid UserRegisterDTO  request) {
         System.out.println("Registering user: " + request);
 
-//        return ResponseEntity
-//                .status(HttpStatus.OK)
-//                .body(successResponse(customMessageSource.get(REGISTERED,
-//                        customMessageSource.get(USER)), authenticationService.registerUser(request)));
-//
-            AuthenticationResponse response = authenticationService.registerUser(request);
-            return ResponseEntity.ok(response);
-       
+
+        AuthenticationResponse response = authenticationService.registerUser(request);
+        ApiResponse<?> apiResponse = new ApiResponse<>(200, "User Registered successfully", response);
+        return ResponseEntity.ok(apiResponse);
+
     }
 
    
     @PostMapping("/login")
     public ResponseEntity<?> login( @RequestBody UserLoginDTO request) {
         System.out.println("Logging in user: " + request.getNumber());
-//        return ResponseEntity
-//                .status(HttpStatus.OK)
-//                .body(successResponse(customMessageSource.get(LOGIN,
-//                        customMessageSource.get(USER)), authenticationService.authenticate(request)));
-//
-//
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+
+        AuthenticationResponse response = authenticationService.authenticate(request);
+        ApiResponse<?> apiResponse = new ApiResponse<>(200, "User Logged In successfully", response);
+        return ResponseEntity.ok(apiResponse);
+
     }
     
 }
