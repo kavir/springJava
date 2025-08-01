@@ -6,6 +6,6 @@ import com.authh.springJwt.Admin.DTO.UserAdminDTO;
 import java.util.List;
 
 public interface AdminService {
-    List<TransactionAdminDTO> getAllTransaction();
-    List<UserAdminDTO> getAllUsers();
+    List<TransactionAdminDTO> getAllTransaction(String time,String searchKeyWord);
+    List<UserAdminDTO> getAllUsers(String searchKeyword);
 }

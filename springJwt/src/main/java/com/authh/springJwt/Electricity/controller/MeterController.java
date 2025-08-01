@@ -35,7 +35,8 @@ public class MeterController {
     private UserDetailServiceImp uerDetailServiceImp;
 
     @PostMapping("/submit")
-    public ResponseEntity<?> submitReading(@RequestParam Long userId, @RequestParam Double currentReading) {
+    public ResponseEntity<?> submitReading(@RequestParam Long userId,
+                                           @RequestParam(value="currentReading",required = false) Double currentReading) {
         MeterReading reading = meterService.submitReading(userId, currentReading);
         return ResponseEntity.ok(reading);
     }
@@ -47,7 +48,11 @@ public class MeterController {
         return ResponseEntity.ok(apiResponse);
     }
     @PostMapping("/pay/{billId}")
-    public ResponseEntity<?> payBill(@PathVariable Long billId,@RequestParam String number,@RequestParam String mpin,@RequestParam String notes,@RequestParam Boolean isUseReward) {
+    public ResponseEntity<?> payBill(@PathVariable Long billId,
+                                     @RequestParam String number,
+                                     @RequestParam String mpin,
+                                     @RequestParam(value="notes",required = false) String notes,
+                                     @RequestParam(value="isUseReward",required = false) Boolean isUseReward) {
         System.out.println("Paying bill with ID: " + billId + ", number: " + number );
         if (billId == null) {
             return ResponseEntity.badRequest().body("Missing required path variable: billId");

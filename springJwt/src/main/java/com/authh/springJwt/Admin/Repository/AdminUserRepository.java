@@ -20,7 +20,15 @@ public interface AdminUserRepository extends JpaRepository<User, Long>{
     )
     FROM User u
     LEFT JOIN u.reward r
-    """)
-    List<UserAdminDTO> findAllUsersForAdmin();
+    WHERE :searchKeyword IS NULL OR (
+        LOWER(u.firstname) LIKE LOWER(CONCAT('%', :searchKeyword, '%')) OR
+        LOWER(u.lastname) LIKE LOWER(CONCAT('%', :searchKeyword, '%')) OR
+        LOWER(u.username) LIKE LOWER(CONCAT('%', :searchKeyword, '%')) OR
+        u.number LIKE CONCAT('%', :searchKeyword, '%') OR
+        LOWER(CAST(u.role AS string)) LIKE LOWER(CONCAT('%', :searchKeyword, '%')) OR
+        LOWER(CAST(r.rewardPoints AS string)) LIKE LOWER(CONCAT('%', :searchKeyword, '%'))
+    )
+""")
+    List<UserAdminDTO> findAllUsersForAdmin(String searchKeyword);
 
 }

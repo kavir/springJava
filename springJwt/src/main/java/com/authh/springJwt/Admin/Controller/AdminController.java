@@ -21,14 +21,14 @@ public class AdminController {
     public ResponseEntity<?> getAllTransactionHistory(@RequestParam(value = "time", required = false) String time,
                                                       @RequestParam(value="searchKeyword",required = false) String searchKeyword
                                                      ){
-        var transactions = adminService.getAllTransaction();
+        var transactions = adminService.getAllTransaction(time,searchKeyword);
         ApiResponse<?> response = new ApiResponse<>(200, "Transaction histories fetched successfully", transactions);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/get-all-user")
     public ResponseEntity<?> getAllTransactionUsers(@RequestParam(value="searchKeyword",required = false) String searchKeyword){
-        var users = adminService.getAllUsers();
+        var users = adminService.getAllUsers(searchKeyword);
         ApiResponse<?> response = new ApiResponse<>(200, "User list fetched successfully", users);
         return ResponseEntity.ok(response);
     }
