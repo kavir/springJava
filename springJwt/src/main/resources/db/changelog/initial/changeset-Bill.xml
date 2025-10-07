@@ -20,28 +20,6 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="9-rename-totalAmount-column1" author="kabir">
-        <renameColumn
-                tableName="bill"
-                oldColumnName="total_amount"
-                newColumnName="totalAmount"
-                columnDataType="DOUBLE"/>
-    </changeSet>
-
-    <changeSet id="9-rename-createdBy-column3" author="kabir">
-        <renameColumn
-                tableName="bill"
-                oldColumnName="createdBy"
-                newColumnName="createdByy"
-                columnDataType="BIGINT"/>
-    </changeSet>
-    <changeSet id="9-rename-createdAt-column3" author="kabir">
-        <renameColumn
-                tableName="bill"
-                oldColumnName="createdAt"
-                newColumnName="created_at"
-                columnDataType="BIGINT"/>
-    </changeSet>
     <changeSet id="10-change-created_at-type" author="kabir">
         <modifyDataType
                 tableName="bill"

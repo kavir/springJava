@@ -21,13 +21,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="9-rename-reward-column" author="kabir">
-        <renameColumn
-                tableName="reward"
-                oldColumnName="reward_points"
-                newColumnName="rewardPoints"
-                columnDataType="DOUBLE"/>
-    </changeSet>
+
 
 
 </databaseChangeLog>

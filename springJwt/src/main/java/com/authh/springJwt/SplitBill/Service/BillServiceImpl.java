@@ -59,13 +59,13 @@ public class BillServiceImpl implements BillService {
 
         List<BillParticipant> participants = new ArrayList<>();
         for (ParticipantDTO dto : request.getParticipants()) {
-        System.out.println("split bills _____"+dto); 
-        System.out.println("split bills _____"+dto.getPhoneNumber()); 
+        System.out.println("split bills _____"+dto);
+        System.out.println("split bills _____"+dto.getPhoneNumber());
 
             User participant = userRepo.findByNumber(dto.getPhoneNumber())
                 .orElseThrow(() -> new RuntimeException("Participant not found"));
-        System.out.println("participant is _____"+participant.getFirstname()); 
-                
+        System.out.println("participant is _____"+participant.getFirstname());
+
             BillParticipant bp = new BillParticipant();
             // BillParticipant bp = splitBillMapper.toBillParticipant(dto);
             bp.setBill(bill);
@@ -77,7 +77,7 @@ public class BillServiceImpl implements BillService {
         bill.setParticipants(participants);
         Bill savedBill = billRepo.save(bill);
         notificationService.sendBillUpdate(
-            "group-" + savedBill.getId(), 
+            "group-" + savedBill.getId(),
             "A new bill titled '" + savedBill.getTitle() + "' was added.",
             creator.getFirstname(),
             "BILL_ADDED"
@@ -87,15 +87,18 @@ public class BillServiceImpl implements BillService {
 
     //////////////////////////////////////////////////////////////////////////////////
     /// fetch splitted bills
-    @Override
     public List<BillResponse> getMyBills(Long Id) {
+        System.out.println("Looking for user with ID: " + Id);
         User user = userRepo.findById(Id)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         List<BillParticipant> entries = participantRepo.findByUser_Id(user.getId());
+        System.out.println("Found " + entries.size() + " bill participants");
+
         Set<Bill> bills = entries.stream().map(BillParticipant::getBill).collect(Collectors.toSet());
-        System.out.println("get my bills___"+bills);
         return bills.stream().map(this::convertToResponse).collect(Collectors.toList());
     }
+
     //////////////////////////////////////////////////////////////////////////////////
     /// fetch splitted bills details
 ////okay
@@ -179,3 +182,82 @@ public class BillServiceImpl implements BillService {
     }
     //////////////////////////////////////////////////////////////////////////////////
 }
+//@Override
+//public BillResponse createBill(CreateBillRequest request, Long creatorId) {
+//    User creator = userRepo.findById(creatorId)
+//            .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//    System.out.println("split bills _____"+request.getTitle());
+//    System.out.println("split bills _____"+request.getTotalAmount());
+//
+//    Bill bill = new Bill();
+//    bill.setTitle(request.getTitle());
+//    bill.setTotalAmount(request.getTotalAmount());
+//    bill.setCreatedBy(creator);
+//    bill.setCreatedAt(LocalDateTime.now());
+//
+//    List<BillParticipant> participants = new ArrayList<>();
+//    List<ParticipantDTO> dtos = request.getParticipants();
+//
+//    if (request.isEqualSplit()) {
+//        // Equal split logic
+//        int count = dtos.size();
+//        double total = request.getTotalAmount();
+//        double equalAmount = Math.round((total / count) * 100.0) / 100.0; // Round to 2 decimals
+//
+//        // To handle rounding differences, calculate remainder:
+//        double sumAssigned = 0.0;
+//
+//        for (int i = 0; i < dtos.size(); i++) {
+//            ParticipantDTO dto = dtos.get(i);
+//            System.out.println("split bills _____" + dto);
+//            System.out.println("split bills _____" + dto.getPhoneNumber());
+//
+//            User participant = userRepo.findByNumber(dto.getPhoneNumber())
+//                    .orElseThrow(() -> new RuntimeException("Participant not found"));
+//            System.out.println("participant is _____" + participant.getFirstname());
+//
+//            BillParticipant bp = new BillParticipant();
+//            bp.setBill(bill);
+//            bp.setUser(participant);
+//
+//            // For last participant, assign remaining amount to avoid rounding issues
+//            if (i == dtos.size() - 1) {
+//                double lastAmount = Math.round((total - sumAssigned) * 100.0) / 100.0;
+//                bp.setAmountOwed(lastAmount);
+//            } else {
+//                bp.setAmountOwed(equalAmount);
+//                sumAssigned += equalAmount;
+//            }
+//            participants.add(bp);
+//        }
+//    } else {
+//        // Manual split as provided in the request DTO
+//        for (ParticipantDTO dto : dtos) {
+//            System.out.println("split bills _____"+dto);
+//            System.out.println("split bills _____"+dto.getPhoneNumber());
+//
+//            User participant = userRepo.findByNumber(dto.getPhoneNumber())
+//                    .orElseThrow(() -> new RuntimeException("Participant not found"));
+//            System.out.println("participant is _____"+participant.getFirstname());
+//
+//            BillParticipant bp = new BillParticipant();
+//            bp.setBill(bill);
+//            bp.setUser(participant);
+//            bp.setAmountOwed(dto.getAmountOwed());
+//            participants.add(bp);
+//        }
+//    }
+//
+//    bill.setParticipants(participants);
+//    Bill savedBill = billRepo.save(bill);
+//
+//    notificationService.sendBillUpdate(
+//            "group-" + savedBill.getId(),
+//            "A new bill titled '" + savedBill.getTitle() + "' was added.",
+//            creator.getFirstname(),
+//            "BILL_ADDED"
+//    );
+//
+//    return convertToResponse(savedBill);
+//}

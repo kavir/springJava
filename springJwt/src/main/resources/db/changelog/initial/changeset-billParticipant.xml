@@ -22,12 +22,6 @@
             <column name="paid_at" type="DATETIME"/>
         </createTable>
     </changeSet>
-    <changeSet id="9-rename-amountowed-column" author="kabir">
-        <renameColumn
-                tableName="bill_participants"
-                oldColumnName="amount_owed"
-                newColumnName="amountOwed"
-                columnDataType="DOUBLE"/>
-    </changeSet>
+
 
 </databaseChangeLog>

@@ -23,8 +23,6 @@
                 columnNames="user_id"
                 constraintName="uk_wallets_user_id"/>
     </changeSet>
-    <changeSet id="10-drop-rewardPoints-column" author="kabir">
-        <dropColumn tableName="wallets" columnName="rewardPoints"/>
-    </changeSet>
+
 
 </databaseChangeLog>
