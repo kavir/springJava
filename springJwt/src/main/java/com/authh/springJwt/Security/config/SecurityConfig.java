@@ -2,6 +2,7 @@ package com.authh.springJwt.Security.config;
 
 import com.authh.springJwt.Authentication.service.UserDetailServiceImp;
 import com.authh.springJwt.Security.filter.JwtAuthenticateFilter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,10 +12,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -69,12 +70,11 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 //        config.setAllowedOriginPatterns(List.of("https://651bec33a29e.ngrok-free.app"));
         config.setAllowedOrigins(List.of(
-/*                "https://springjava.onrender.com",
+                "https://springjava.onrender.com",
                 "http://springjava.onrender.com",
                 "http://localhost:8080",
                 "http://localhost:3000",
-                "https://editor.swagger.io"*/
-                "*"
+                "https://editor.swagger.io"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With"));
@@ -87,11 +87,11 @@ public class SecurityConfig {
     }
 
 
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

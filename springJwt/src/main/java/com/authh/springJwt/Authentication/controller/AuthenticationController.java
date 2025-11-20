@@ -1,6 +1,7 @@
 package com.authh.springJwt.Authentication.controller;
 
 import com.authh.springJwt.Authentication.model.UserLoginDTO;
+import com.authh.springJwt.Authentication.service.AuthenticationRegisterResponseDto;
 import com.authh.springJwt.Utils.BaseController;
 import com.authh.springJwt.Utils.ResponseClass.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,7 +38,7 @@ public class AuthenticationController {
         System.out.println("Registering user: " + request);
 
 
-        AuthenticationResponse response = authenticationService.registerUser(request);
+        AuthenticationRegisterResponseDto response = authenticationService.registerUser(request);
         ApiResponse<?> apiResponse = new ApiResponse<>(200, "User Registered successfully", response);
         return ResponseEntity.ok(apiResponse);
 

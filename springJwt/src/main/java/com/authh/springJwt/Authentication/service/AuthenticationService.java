@@ -34,7 +34,7 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
     }
-    public AuthenticationResponse registerUser(UserRegisterDTO  request) {
+    public AuthenticationRegisterResponseDto registerUser(UserRegisterDTO  request) {
         Wallet wallet = new Wallet();
         if (request.getMpin() == null) {
             throw new IllegalArgumentException("MPin must not be null during registration.");
@@ -63,14 +63,11 @@ public class AuthenticationService {
         wallet.setUser(user);  
         walletRepository.save(wallet);
         user.setWallet(wallet);  
-        String token = jwtService.generateToken(user);
-        return new AuthenticationResponse(token,"Registration successful");
+        return new AuthenticationRegisterResponseDto("Registration successful");
     }
     
     
     public AuthenticationResponse authenticate(UserLoginDTO request){
-        System.out.println(" Phone Number: " + request.getNumber());
-        System.out.println(" Password: " + request.getPassword());
         try{
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNumber(),request.getPassword()));}
         catch (Exception e) {
