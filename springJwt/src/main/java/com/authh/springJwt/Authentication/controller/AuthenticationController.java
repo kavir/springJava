@@ -25,19 +25,15 @@ import static com.authh.springJwt.Utils.SuccessResponseConstant.*;
 
 
 @RestController
-public class AuthenticationController  {
+public class AuthenticationController {
 
     @Autowired
     private AuthenticationService authenticationService;
 
-//    @Operation(
-//            summary = "Gets a list of districts",
-//            description = "This API allows users to get a list of districts based on the specified province ID and optional search keyword. It returns the districts in the preferred language for authorized users"
-//    )
 
     @PostMapping("/register")
     public ResponseEntity<?> register(
-            @RequestBody @Valid UserRegisterDTO  request) {
+            @RequestBody @Valid UserRegisterDTO request) {
         System.out.println("Registering user: " + request);
 
 
@@ -47,9 +43,8 @@ public class AuthenticationController  {
 
     }
 
-   
     @PostMapping("/login")
-    public ResponseEntity<?> login( @RequestBody UserLoginDTO request) {
+    public ResponseEntity<?> login(@RequestBody UserLoginDTO request) {
         System.out.println("Logging in user: " + request.getNumber());
 
         AuthenticationResponse response = authenticationService.authenticate(request);
@@ -57,5 +52,5 @@ public class AuthenticationController  {
         return ResponseEntity.ok(apiResponse);
 
     }
-    
+
 }

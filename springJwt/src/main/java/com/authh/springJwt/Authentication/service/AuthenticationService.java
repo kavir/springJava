@@ -36,7 +36,6 @@ public class AuthenticationService {
     }
     public AuthenticationResponse registerUser(UserRegisterDTO  request) {
         Wallet wallet = new Wallet();
-        System.out.println("the mpin from front end is ______"+request.getMpin());
         if (request.getMpin() == null) {
             throw new IllegalArgumentException("MPin must not be null during registration.");
         }

@@ -22,6 +22,14 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="4-convert-reward-to-onetoone" author="kavir">
 
+        <!-- Make user_id unique to enforce One-To-One -->
+        <addUniqueConstraint
+                tableName="reward"
+                columnNames="user_id"
+                constraintName="uk_reward_user_id" />
+
+    </changeSet>
 
 </databaseChangeLog>
