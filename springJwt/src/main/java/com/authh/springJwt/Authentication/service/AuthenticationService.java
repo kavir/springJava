@@ -70,6 +70,8 @@ public class AuthenticationService {
     
     
     public AuthenticationResponse authenticate(UserLoginDTO request){
+        System.out.println(" Phone Number: " + request.getNumber());
+        System.out.println(" Password: " + request.getPassword());
         try{
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNumber(),request.getPassword()));}
         catch (Exception e) {
