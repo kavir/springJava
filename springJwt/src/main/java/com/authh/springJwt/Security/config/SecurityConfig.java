@@ -6,6 +6,7 @@ import com.authh.springJwt.Security.filter.JwtAuthenticateFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,11 +35,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        System.out.println("siuuu___SecurityFilterChain initialized!");
         return http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(req ->
-                        req.requestMatchers("/login/**",
+                        req.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/login/**",
                                         "/v3/api-docs/**",
                                         "/swagger-ui/**",
                                         "/swagger-ui.html",
@@ -68,7 +69,6 @@ public class SecurityConfig {
 
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-//        config.setAllowedOriginPatterns(List.of("https://651bec33a29e.ngrok-free.app"));
         config.setAllowedOrigins(List.of(
                 "https://springjava.onrender.com",
                 "http://springjava.onrender.com",
@@ -78,7 +78,7 @@ public class SecurityConfig {
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With"));
-        config.setExposedHeaders(List.of("Authorization")); // Needed for JWT
+        config.setExposedHeaders(List.of("Authorization"));
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
