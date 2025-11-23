@@ -37,9 +37,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(req ->
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(req ->
                         req.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/login/**",
+                                .requestMatchers(
+                                        "/login/**",
                                         "/v3/api-docs/**",
                                         "/swagger-ui/**",
                                         "/swagger-ui.html",
@@ -47,39 +49,38 @@ public class SecurityConfig {
                                         "/configuration/ui",
                                         "/configuration/security",
                                         "/webjars/**",
-                                        "/register/**").permitAll()
-                                .requestMatchers("/api/employees/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/api/wallet/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/api/bills/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/api/splitBills/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/api/transactions/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/api/qr/generate**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/ws/transactions**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/api/getRewardPoints**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .anyRequest().authenticated())
-                .userDetailsService(userDetailServiceImp)
+                                        "/register/**"
+                                ).permitAll()
+                                .anyRequest().authenticated()
+                )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .userDetailsService(userDetailServiceImp)
                 .build();
     }
+
 
     @Bean
 
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(
+        config.setAllowedOriginPatterns(List.of(
                 "https://springjava.onrender.com",
                 "http://springjava.onrender.com",
                 "http://localhost:8080",
                 "http://localhost:3000",
+                "http://localhost:5173",
                 "https://editor.swagger.io"
         ));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With"));
-        config.setExposedHeaders(List.of("Authorization"));
+        config.setAllowedMethods(List.of("*"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setExposedHeaders(List.of("*"));
         config.setAllowCredentials(true);
+//        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//        config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With"));
+//        config.setExposedHeaders(List.of("Authorization"));
+//        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);

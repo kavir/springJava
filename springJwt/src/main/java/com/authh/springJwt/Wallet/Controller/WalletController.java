@@ -30,16 +30,17 @@ public class WalletController {
     private WalletService walletService;
     @Autowired
     private UserDetailServiceImp userDetailServiceImp;
+
     @PostMapping("/transfer")
     public ResponseEntity<TransferResponse> fundTransfer(@RequestParam(value = "senderNumber") String senderNumber,
                                                          @RequestParam(value = "receiverNumber") String receiverNumber,
                                                          @RequestParam(value = "amount") Double amount,
                                                          @RequestParam(value = "mpin") String mpin,
                                                          @RequestParam(value = "notes", required = false) String notes,
-                                                         @RequestParam(value = "isUseReward", required = false) Boolean  isUseReward
-                                                         ) throws IOException {
-        System.out.println("THE DATA ARE: " + senderNumber + " " + receiverNumber + " " + amount + " "+ notes + " "+ isUseReward);
-    
+                                                         @RequestParam(value = "isUseReward", required = false) Boolean isUseReward
+    ) throws IOException {
+        System.out.println("THE DATA ARE: " + senderNumber + " " + receiverNumber + " " + amount + " " + notes + " " + isUseReward);
+
         if (senderNumber.equals(receiverNumber)) {
             TransferResponse selfTransferResponse = new TransferResponse(
                     "failure",
@@ -53,8 +54,8 @@ public class WalletController {
             );
             return ResponseEntity.badRequest().body(selfTransferResponse);
         }
-    
-        WalletTransferResult result = walletService.transferFunds(senderNumber, receiverNumber, amount, mpin,notes,isUseReward);
+
+        WalletTransferResult result = walletService.transferFunds(senderNumber, receiverNumber, amount, mpin, notes, isUseReward);
         String status = result.getStatus();
         double serviceChargeAmount = result.getServiceChargeAmount();
         double discountAmount = result.getDiscountAmount();
@@ -62,7 +63,7 @@ public class WalletController {
         String receiverName = walletService.getReceiverName(receiverNumber);
         System.out.println("amount 2: " + actualAmount);
         System.out.println("serviceamount 2: " + serviceChargeAmount);
-    
+
         TransferResponse response = new TransferResponse(
                 status.equals("SUCCESS") ? "success" : "failure",
                 switch (status) {
@@ -79,7 +80,7 @@ public class WalletController {
                 receiverNumber
         );
         System.out.println("Response: " + response.getAmount() + " " + response.getServiceChargeAmount());
-    
+
         return switch (status) {
             case "SUCCESS" -> ResponseEntity.ok(response);
             case "INVALID_MPIN" -> ResponseEntity.status(401).body(response);
@@ -87,29 +88,29 @@ public class WalletController {
             default -> ResponseEntity.status(500).body(response);
         };
     }
-    
-//////////////////////////////////////////////////
-   
+
+    /// ///////////////////////////////////////////////
+
 
     @GetMapping("/userWallet")
     public ResponseEntity<UserWalletResponse> getUserWallet(@RequestParam(value = "number") String number) {
         Wallet wallet = walletService.getWalletByUserNumber(number);
-        
+
         if (wallet == null) {
-            return ResponseEntity.status(404).body(null);  
+            return ResponseEntity.status(404).body(null);
         }
-    
+
         User user = wallet.getUser();
-        Long userId=user.getId();
+        Long userId = user.getId();
         String userName = user.getFirstname() + " " + user.getLastname();
-        String firstName = user.getFirstname() ;
-        String lastName =  user.getLastname();
+        String firstName = user.getFirstname();
+        String lastName = user.getLastname();
         String userPhoneNumber = user.getNumber();
-        String userProfile= user.getProfilePicture() != null ? user.getProfilePicture() : "default.png"; 
+        String userProfile = user.getProfilePicture() != null ? user.getProfilePicture() : "default.png";
         Double walletBalance = wallet.getBalance();
-    
-        UserWalletResponse response = new UserWalletResponse(userId,userName, userPhoneNumber,userProfile, walletBalance,firstName,lastName);
-    
+
+        UserWalletResponse response = new UserWalletResponse(userId, userName, userPhoneNumber, userProfile, walletBalance, firstName, lastName);
+
         return ResponseEntity.ok(response);
     }
 
@@ -121,7 +122,7 @@ public class WalletController {
         try {
             // Call the service method to update user, no need to assign if not used
             userDetailServiceImp.updateUser(request);
-            
+
             return ResponseEntity.ok("User updated successfully");
         } catch (UsernameNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
@@ -134,6 +135,4 @@ public class WalletController {
     //
 
 
-
-    
 }

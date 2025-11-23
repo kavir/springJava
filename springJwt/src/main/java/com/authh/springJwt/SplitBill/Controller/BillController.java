@@ -3,17 +3,23 @@ package com.authh.springJwt.SplitBill.Controller;
 import com.authh.springJwt.SplitBill.DTO.CreateBillRequest;
 import com.authh.springJwt.SplitBill.Service.BillService;
 import com.authh.springJwt.Utils.ResponseClass.ApiResponse;
+import com.authh.springJwt.common.controller.BaseController;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.authh.springJwt.common.constant.FieldConstantValue.WORK_INTEREST;
+import static com.authh.springJwt.common.constant.messages.FETCHED_LIST;
+
 /////okay
 /// 
 @RestController
 @RequestMapping("/api/splitBills")
 @RequiredArgsConstructor
-public class BillController {
+public class BillController extends BaseController {
 
     @Autowired
     private final BillService billService;
@@ -28,9 +34,13 @@ public class BillController {
     }
 
 //    @GetMapping
-//    public ResponseEntity<?> getMyBills(@RequestParam(value="userId")  Long Id) {
-//        ApiResponse<?> apiResponse = new ApiResponse<>(200, "Bill Fetched successfully", billService.getMyBills(Id));
-//        return ResponseEntity.ok(apiResponse);
+//    public ResponseEntity<?> getMyBills(@RequestParam(value="userId")  Long Id,@RequestParam(defaultValue = "0") int page,
+//                                        @RequestParam(defaultValue = "20") int size) {
+//        return ResponseEntity
+//                .status(HttpStatus.OK)
+//                .body(successResponse(customMessageSource.get(FETCHED_LIST,
+//                        customMessageSource.get(WORK_INTEREST)),
+//                        workInterestService.getAllWorkInterestWithPagination(page, size)));
 //    }
 
     @GetMapping("/{billId}")
