@@ -1,7 +1,6 @@
-package com.authh.springJwt.Utils;
+package com.authh.springJwt.common.message;
 
-
-
+import com.authh.springJwt.common.locale.LocaleThreadStorage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
@@ -14,12 +13,12 @@ public class CustomMessageSource {
 
 
     public String get(String code) {
-        return messageSource.getMessage(code, null, LocalThreatStorage.getLocale());
+        return messageSource.getMessage(code, null, LocaleThreadStorage.getLocale());
     }
 
     public String get(String code, Object... objects) {
-        return messageSource.getMessage(code, objects, LocalThreatStorage.getLocale());
+        return messageSource.getMessage(code, objects, LocaleThreadStorage.getLocale());
     }
+
+
 }
-
-

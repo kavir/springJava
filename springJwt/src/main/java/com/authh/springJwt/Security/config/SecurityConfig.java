@@ -36,7 +36,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(req ->
                         req.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/login/**",
@@ -69,11 +69,12 @@ public class SecurityConfig {
 
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(
+        config.setAllowedOriginPatterns(List.of(
                 "https://springjava.onrender.com",
                 "http://springjava.onrender.com",
                 "http://localhost:8080",
                 "http://localhost:3000",
+                "http://localhost:5173",
                 "https://editor.swagger.io"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
