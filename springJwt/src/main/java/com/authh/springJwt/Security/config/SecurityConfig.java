@@ -36,10 +36,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .cors(AbstractHttpConfigurer::disable)
-                .csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(req ->
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(req ->
                         req.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/login/**",
+                                .requestMatchers(
+                                        "/login/**",
                                         "/v3/api-docs/**",
                                         "/swagger-ui/**",
                                         "/swagger-ui.html",
@@ -47,23 +49,17 @@ public class SecurityConfig {
                                         "/configuration/ui",
                                         "/configuration/security",
                                         "/webjars/**",
-                                        "/register/**").permitAll()
-                                .requestMatchers("/api/employees/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/api/wallet/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/api/bills/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/api/splitBills/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/api/transactions/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/api/qr/generate**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/ws/transactions**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/api/getRewardPoints**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .anyRequest().authenticated())
-                .userDetailsService(userDetailServiceImp)
+                                        "/register/**"
+                                ).permitAll()
+                                .anyRequest().authenticated()
+                )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .userDetailsService(userDetailServiceImp)
                 .build();
     }
+
 
     @Bean
 
@@ -77,10 +73,14 @@ public class SecurityConfig {
                 "http://localhost:5173",
                 "https://editor.swagger.io"
         ));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With"));
-        config.setExposedHeaders(List.of("Authorization"));
+        config.setAllowedMethods(List.of("*"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setExposedHeaders(List.of("*"));
         config.setAllowCredentials(true);
+//        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//        config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With"));
+//        config.setExposedHeaders(List.of("Authorization"));
+//        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
