@@ -1,6 +1,7 @@
 package com.authh.springJwt.Reward.Controller;
 
 import com.authh.springJwt.Utils.ResponseClass.ApiResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class RewardPointController {
 
-    @Autowired
-    private RewardService rewardService;
+    private final RewardService rewardService;
 
     @GetMapping("/getRewardPoints/{userId}")
     public ResponseEntity<?> getRewardPoints(@PathVariable(value = "userId") String userId) {

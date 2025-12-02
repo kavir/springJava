@@ -2,6 +2,8 @@ package com.authh.springJwt.Electricity.service;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.authh.springJwt.Electricity.model.ElectricityBill;
@@ -10,13 +12,12 @@ import com.authh.springJwt.Electricity.repository.ElectricityBillRepository;
 import com.authh.springJwt.Electricity.repository.MeterReadingRepository;
 
 @Service
+@RequiredArgsConstructor
 public class MeterService {
 
-    @Autowired
-    private MeterReadingRepository meterReadingRepo;
+    private final MeterReadingRepository meterReadingRepo;
 
-    @Autowired
-    private ElectricityBillRepository billRepo;
+    private final ElectricityBillRepository billRepo;
 
     private static final double RATE_PER_UNIT = 16.0;
 

@@ -2,6 +2,7 @@ package com.authh.springJwt.Wallet.Service;
 
 import java.io.IOException;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,21 +19,17 @@ import com.authh.springJwt.Wallet.Response.WalletTransferResult;
 import jakarta.transaction.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class WalletService {
-    @Autowired
-    private WalletRepository walletRepository;
-    @Autowired
-    private TransactionService transactionService;
+    private final WalletRepository walletRepository;
+    private final TransactionService transactionService;
 
-    @Autowired
-    private TransactionRepository transactionRepository;
+    private final TransactionRepository transactionRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     // @Autowired
     // private RevenueRepository revenueRepository;
-    @Autowired
-    private RewardRepository rewardRepository;
+    private final RewardRepository rewardRepository;
 
     double serviceChargePercentage;
 

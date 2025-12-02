@@ -1,15 +1,5 @@
 package com.authh.springJwt.SplitBill.Service;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.authh.springJwt.Authentication.model.User;
 import com.authh.springJwt.Authentication.repo.UserRepository;
 import com.authh.springJwt.SplitBill.DTO.CreateBillRequest;
@@ -22,35 +12,39 @@ import com.authh.springJwt.SplitBill.Response.BillResponse;
 import com.authh.springJwt.SplitBill.Response.ParticipantStatus;
 import com.authh.springJwt.Wallet.Service.WalletService;
 import com.authh.springJwt.WebSocket.Service.NotificationService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
-// @RequiredArgsConstructor
+@RequiredArgsConstructor
 public class BillServiceImpl implements BillService {
 
-    @Autowired
-    private  BillRepository billRepo;
-    @Autowired
-    private  BillParticipantRepository participantRepo;
-    @Autowired
-    private  UserRepository userRepo;
-    @Autowired
-    private  WalletService walletService;
-    @Autowired
-    private NotificationService notificationService;
+    private final BillRepository billRepo;
+    private final BillParticipantRepository participantRepo;
+    private final UserRepository userRepo;
+    private final WalletService walletService;
+    private final NotificationService notificationService;
     // @Autowired
     // private SplitBillMapper splitbillMapper;
 
 
-    //////////////////////////////////////////////////////////////////////////////////
+    /// ///////////////////////////////////////////////////////////////////////////////
     /// Creating bill split
 
     @Override
     public BillResponse createBill(CreateBillRequest request, Long creatorId) {
         User creator = userRepo.findById(creatorId)
-            .orElseThrow(() -> new RuntimeException("User not found"));
-        System.out.println("split bills _____"+request.getTitle());
-        System.out.println("split bills _____"+request.getTotalAmount());
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        System.out.println("split bills _____" + request.getTitle());
+        System.out.println("split bills _____" + request.getTotalAmount());
         Bill bill = new Bill();
         bill.setTitle(request.getTitle());
         bill.setTotalAmount(request.getTotalAmount());
@@ -59,12 +53,12 @@ public class BillServiceImpl implements BillService {
 
         List<BillParticipant> participants = new ArrayList<>();
         for (ParticipantDTO dto : request.getParticipants()) {
-        System.out.println("split bills _____"+dto);
-        System.out.println("split bills _____"+dto.getPhoneNumber());
+            System.out.println("split bills _____" + dto);
+            System.out.println("split bills _____" + dto.getPhoneNumber());
 
             User participant = userRepo.findByNumber(dto.getPhoneNumber())
-                .orElseThrow(() -> new RuntimeException("Participant not found"));
-        System.out.println("participant is _____"+participant.getFirstname());
+                    .orElseThrow(() -> new RuntimeException("Participant not found"));
+            System.out.println("participant is _____" + participant.getFirstname());
 
             BillParticipant bp = new BillParticipant();
             // BillParticipant bp = splitBillMapper.toBillParticipant(dto);
@@ -77,15 +71,15 @@ public class BillServiceImpl implements BillService {
         bill.setParticipants(participants);
         Bill savedBill = billRepo.save(bill);
         notificationService.sendBillUpdate(
-            "group-" + savedBill.getId(),
-            "A new bill titled '" + savedBill.getTitle() + "' was added.",
-            creator.getFirstname(),
-            "BILL_ADDED"
+                "group-" + savedBill.getId(),
+                "A new bill titled '" + savedBill.getTitle() + "' was added.",
+                creator.getFirstname(),
+                "BILL_ADDED"
         );
         return convertToResponse(savedBill);
     }//okay
 
-    //////////////////////////////////////////////////////////////////////////////////
+    /// ///////////////////////////////////////////////////////////////////////////////
     /// fetch splitted bills
     public List<BillResponse> getMyBills(Long Id) {
         System.out.println("Looking for user with ID: " + Id);
@@ -99,39 +93,40 @@ public class BillServiceImpl implements BillService {
         return bills.stream().map(this::convertToResponse).collect(Collectors.toList());
     }
 
-    //////////////////////////////////////////////////////////////////////////////////
+    /// ///////////////////////////////////////////////////////////////////////////////
     /// fetch splitted bills details
-////okay
+    /// /okay
     @Override
     public BillResponse getBillDetails(Long billId) {
         Bill bill = billRepo.findById(billId)
-            .orElseThrow(() -> new RuntimeException("Bill not found"));
+                .orElseThrow(() -> new RuntimeException("Bill not found"));
         return convertToResponse(bill);
     }
-    //////////////////////////////////////////////////////////////////////////////////
+
+    /// ///////////////////////////////////////////////////////////////////////////////
     /// pay the splitted bills
 
     @Override
-    public String settleBill(Long billId, Long userId,String mpin,String note,Boolean isUseReward) {
+    public String settleBill(Long billId, Long userId, String mpin, String note, Boolean isUseReward) {
         User payer = userRepo.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         BillParticipant bp = participantRepo.findByBill_IdAndUser_Id(billId, userId)
-            .orElseThrow(() -> new RuntimeException("No bill found for user"));
+                .orElseThrow(() -> new RuntimeException("No bill found for user"));
 
         if (bp.getHasPaid()) {
             return "Already paid.";
         }
-        String senderNumber=payer.getNumber();
-        String receiverNumber=bp.getBill().getCreatedBy().getNumber();
-        Double amount=bp.getAmountOwed();
-  
+        String senderNumber = payer.getNumber();
+        String receiverNumber = bp.getBill().getCreatedBy().getNumber();
+        Double amount = bp.getAmountOwed();
+
         try {
             walletService.transferFunds(
-                senderNumber,
-                receiverNumber,
-               amount,
-                mpin, note, isUseReward);
+                    senderNumber,
+                    receiverNumber,
+                    amount,
+                    mpin, note, isUseReward);
         } catch (IOException e) {
             throw new RuntimeException("Payment failed: " + e.getMessage());
         }
@@ -141,24 +136,25 @@ public class BillServiceImpl implements BillService {
         bp.setPaidAt(LocalDateTime.now());
         participantRepo.save(bp);
         notificationService.sendBillUpdate(
-            "group-" + billId,
-            payer.getFirstname() + " has settled their part of the bill.",
-            payer.getFirstname(),
-            "BILL_PAID"
+                "group-" + billId,
+                payer.getFirstname() + " has settled their part of the bill.",
+                payer.getFirstname(),
+                "BILL_PAID"
         );
         return "Payment successful.";
     }
-    //////////////////////////////////////////////////////////////////////////////////
+
+    /// ///////////////////////////////////////////////////////////////////////////////
 
     private BillResponse convertToResponse(Bill bill) {
-        
-       List<ParticipantStatus> parts = bill.getParticipants().stream().map(bp -> {
+
+        List<ParticipantStatus> parts = bill.getParticipants().stream().map(bp -> {
             ParticipantStatus ps = new ParticipantStatus();
             ps.setUserId(bp.getUser().getId());
-            
+
             String fullName = bp.getUser().getFirstname() + " " + bp.getUser().getLastname();
             ps.setName(fullName);
-            
+
             ps.setAmountOwed(bp.getAmountOwed());
             ps.setHasPaid(bp.getHasPaid());
             ps.setPaidAt(bp.getPaidAt());
@@ -166,7 +162,7 @@ public class BillServiceImpl implements BillService {
         }).collect(Collectors.toList());
 
 
-       BillResponse response = new BillResponse();
+        BillResponse response = new BillResponse();
 
         String creatorFullName = bill.getCreatedBy().getFirstname() + " " + bill.getCreatedBy().getLastname();
 

@@ -1,15 +1,15 @@
 package com.authh.springJwt.WebSocket.Service;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.authh.springJwt.WebSocket.Model.NotificationMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import com.authh.springJwt.WebSocket.Model.NotificationMessage;
-
 @Service
+@RequiredArgsConstructor
 public class NotificationService {
 
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
+    private final SimpMessagingTemplate messagingTemplate;
 
     public void sendBillUpdate(String groupId, String content, String sender, String type) {
         NotificationMessage message = new NotificationMessage();

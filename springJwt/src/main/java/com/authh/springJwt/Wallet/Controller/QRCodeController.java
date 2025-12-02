@@ -2,6 +2,7 @@ package com.authh.springJwt.Wallet.Controller;
 
 import com.authh.springJwt.Wallet.Service.QrCodeService;
 import com.google.zxing.WriterException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,10 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/qr")
+@RequiredArgsConstructor
 public class QRCodeController {
-    @Autowired
-    private QrCodeService qrCodeService;
+
+    private final QrCodeService qrCodeService;
 
     @GetMapping("/generate/{phoneNumber}")
     public ResponseEntity<byte[]> generateQRCode(@PathVariable String phoneNumber) throws WriterException, IOException {
