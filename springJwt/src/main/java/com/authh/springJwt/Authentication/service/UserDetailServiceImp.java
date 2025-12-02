@@ -2,6 +2,7 @@ package com.authh.springJwt.Authentication.service;
 
 import java.util.Optional;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,9 +16,9 @@ import com.authh.springJwt.Authentication.repo.UserRepository;
 import com.authh.springJwt.Wallet.Response.UserUpdateRequest;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailServiceImp implements UserDetailsService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     // @Autowired
     // private PasswordEncoder passwordEncoder;

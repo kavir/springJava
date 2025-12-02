@@ -1,39 +1,32 @@
 package com.authh.springJwt.Authentication.service;
 
+import com.authh.springJwt.Authentication.model.User;
 import com.authh.springJwt.Authentication.model.UserLoginDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.authh.springJwt.Authentication.model.UserRegisterDTO;
+import com.authh.springJwt.Authentication.repo.UserRepository;
+import com.authh.springJwt.Wallet.Model.Wallet;
+import com.authh.springJwt.Wallet.Repository.WalletRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.authh.springJwt.Authentication.model.User;
-import com.authh.springJwt.Authentication.model.UserRegisterDTO;
-import com.authh.springJwt.Authentication.repo.UserRepository;
-import com.authh.springJwt.Wallet.Model.Wallet;
-import com.authh.springJwt.Wallet.Repository.WalletRepository;
-
 @Service
+@RequiredArgsConstructor
 public class AuthenticationService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-     @Autowired
-    private WalletRepository walletRepository;
-    
-    @Autowired
-    private JwtService jwtService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
 
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
-    }
+    private final PasswordEncoder passwordEncoder;
+
+    private final WalletRepository walletRepository;
+    
+    private final JwtService jwtService;
+
+    private final AuthenticationManager authenticationManager;
+
     public AuthenticationRegisterResponseDto registerUser(UserRegisterDTO  request) {
         Wallet wallet = new Wallet();
         if (request.getMpin() == null) {
@@ -65,8 +58,7 @@ public class AuthenticationService {
         user.setWallet(wallet);  
         return new AuthenticationRegisterResponseDto("Registration successful");
     }
-    
-    
+
     public AuthenticationResponse authenticate(UserLoginDTO request){
         try{
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNumber(),request.getPassword()));}
