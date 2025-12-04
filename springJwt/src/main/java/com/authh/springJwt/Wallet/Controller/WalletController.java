@@ -1,19 +1,5 @@
 package com.authh.springJwt.Wallet.Controller;
 
-import java.io.IOException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.authh.springJwt.Authentication.model.User;
 import com.authh.springJwt.Authentication.service.UserDetailServiceImp;
 import com.authh.springJwt.Wallet.Model.TransferResponse;
@@ -22,14 +8,22 @@ import com.authh.springJwt.Wallet.Response.UserUpdateRequest;
 import com.authh.springJwt.Wallet.Response.UserWalletResponse;
 import com.authh.springJwt.Wallet.Response.WalletTransferResult;
 import com.authh.springJwt.Wallet.Service.WalletService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/wallet")
+@RequiredArgsConstructor
 public class WalletController {
-    @Autowired
-    private WalletService walletService;
-    @Autowired
-    private UserDetailServiceImp userDetailServiceImp;
+
+    private final WalletService walletService;
+
+    private final UserDetailServiceImp userDetailServiceImp;
 
     @PostMapping("/transfer")
     public ResponseEntity<TransferResponse> fundTransfer(@RequestParam(value = "senderNumber") String senderNumber,

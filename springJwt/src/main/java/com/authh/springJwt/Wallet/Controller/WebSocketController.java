@@ -1,5 +1,6 @@
 package com.authh.springJwt.Wallet.Controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,13 +12,12 @@ import com.authh.springJwt.Wallet.Model.Wallet;
 import com.authh.springJwt.Wallet.Service.WalletService;
 
 @RestController
+@RequiredArgsConstructor
 public class WebSocketController {
 
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate; // This allows us to send messages to clients
+    private final SimpMessagingTemplate messagingTemplate; // This allows us to send messages to clients
 
-   @Autowired
-    private WalletService walletService;// A service to get the updated balance
+    private final WalletService walletService;// A service to get the updated balance
     
     @PostMapping("/transaction/completed")
     public void handleTransactionCompleted(@RequestBody String number) {

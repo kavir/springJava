@@ -1,14 +1,15 @@
 package com.authh.springJwt.Reward.Service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.authh.springJwt.Reward.Repository.RewardRepository;
 
 @Service
+@RequiredArgsConstructor
 public class RewardService {
-    @Autowired
-    private RewardRepository rewardRepository;
+    private final RewardRepository rewardRepository;
 
     public String fetchRewardPoints(Long userId) {
         return rewardRepository.findByUserId(userId)

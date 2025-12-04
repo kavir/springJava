@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.authh.springJwt.Authentication.service.AuthenticationResponse;
 import com.authh.springJwt.Utils.ResponseClass.ApiResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,16 +24,13 @@ import com.authh.springJwt.Wallet.Response.WalletTransferResult;
 import com.authh.springJwt.Wallet.Service.WalletService;
 
 @RestController
-// @CrossOrigin(origins = "*")
 @RequestMapping("/api/meter")
+@RequiredArgsConstructor
 public class MeterController {
 
-    @Autowired
-    private MeterService meterService;
-    @Autowired
-    private WalletService walletService;
-    @Autowired
-    private UserDetailServiceImp uerDetailServiceImp;
+    private final MeterService meterService;
+    private final WalletService walletService;
+    private final UserDetailServiceImp uerDetailServiceImp;
 
     @PostMapping("/submit")
     public ResponseEntity<?> submitReading(@RequestParam Long userId,
