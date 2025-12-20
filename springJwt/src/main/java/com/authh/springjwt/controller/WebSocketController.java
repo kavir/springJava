@@ -1,0 +1,35 @@
+package com.authh.springjwt.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.authh.springjwt.Authentication.model.User;
+import com.authh.springjwt.model.Wallet;
+import com.authh.springjwt.service.WalletService;
+
+@RestController
+@RequiredArgsConstructor
+public class WebSocketController {
+
+    private final SimpMessagingTemplate messagingTemplate; // This allows us to send messages to clients
+
+    private final WalletService walletService;// A service to get the updated balance
+    
+    @PostMapping("/transaction/completed")
+    public void handleTransactionCompleted(@RequestBody String number) {
+       Wallet wallet = walletService.getWalletByUserNumber(number);
+        
+       
+    
+        User user = wallet.getUser();
+        Long id=user.getId();
+      
+        Double walletBalance = wallet.getBalance();
+        // Send the updated balance to the frontend
+        messagingTemplate.convertAndSend("/topic/balance/" + id, walletBalance);
+    }
+}
+////
